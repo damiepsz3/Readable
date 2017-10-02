@@ -69,3 +69,45 @@ export const postDelete = (id) =>
 export const postComments = (id) =>
   fetch(`${api}/posts/${id}/comments`, { headers })
   .then(res => res.json())
+
+//comments
+export const comment = (body, author, parentId) =>
+  // add id as UUID and get timestamp
+  fetch(`${api}/comments`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ body, author, parentId })
+  }).then(res => res.json())
+
+export const comDetail = (id) =>
+  fetch(`${api}/comments/${id}`, { headers })
+  .then(res => res.json())
+
+export const comVote = (id, option) =>
+  fetch(`${api}/comments/${id}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ option })
+  }).then(res => res.json())
+
+export const comEdit = (id, timestamp, body) =>
+  fetch(`${api}/comments/${id}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ timestamp, body })
+  }).then(res => res.json())
+
+export const comDelete = (id) =>
+  fetch(`${api}/comments/${id}`, {
+    method: 'DELETE',
+    headers: { ...headers }
+  }).then(res => res.json())

@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
-import '../App.css';
-import * as BlogApi from '../utils/BlogAPI'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Route, Link } from 'react-router-dom'
+import '../App.css'
+import { fetchPosts, fetchCategories, fetchComments } from '../actions'
 
 class App extends Component {
   state = {
@@ -9,11 +10,8 @@ class App extends Component {
   }
 
   componentDidMount () {
-    // BlogApi.getCategories().then( resp => console.log(resp));
-    // BlogApi.getCatPost('react').then( resp => console.log(resp));
-    // BlogApi.getPosts().then( resp => console.log(resp));
-    BlogApi.postComments("8xf0y6ziyjabvozdd253nd").then(resp => console.log(resp))
-
+    this.props.getPosts()
+    this.props.getCategories()
   }
 
   render() {
@@ -32,6 +30,7 @@ class App extends Component {
                 </li>
               ))}
             </div>
+            <button onClick={() => this.props.receives()}>Click</button>
           </div>
         )} />
       </div>
@@ -39,4 +38,15 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = ({ posts, categories }) => {
+
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getPosts: (data) => dispatch(fetchPosts(data)),
+    getCategories: (data) => dispatch(fetchCategories(data)),
+    getComments: (data) => dispatch(fetchComments(data))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App)
