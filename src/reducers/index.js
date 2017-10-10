@@ -1,31 +1,59 @@
 import { combineReducers } from 'redux'
 import {
-  GET_POSTS,
   GET_CATEGORIES,
-  GET_COMMENTS
+  GET_COMMENTS,
+  SET_FETCHING_INFO,
+  FetchingInfo
 } from '../actions'
+import {
+  REQUEST_POSTS,
+  RECEIVE_POSTS
+} from '../actions/posts'
 
-const categories = (state = {}, action) => {
-  switch (action.type) {
-    case GET_CATEGORIES:
-      const { categories } = action
-      return {
-        ...categories
-      }
+const { FETCHING } = FetchingInfo
+
+const blogApp = (state = FETCHING, action) => {
+  switch(action.type) {
+    case SET_FETCHING_INFO:
+      return Object.assign({}, state, {
+        fetchingInfo: action.fetching
+      })
     default:
       return state
-
   }
 }
 
-const posts = (state = {}, action) => {
-  switch (action.type) {
-    case GET_POSTS:
-    const { posts } = action
-      return {
-        ...posts
-      }
 
+const categories = (state = [], action) => {
+  switch (action.type) {
+    case GET_CATEGORIES:
+      const { categories } = action
+      return [
+        ...state,
+        ...action.categories
+      ]
+    default:
+      return state
+  }
+}
+
+const posts = (
+  state = {
+    isFetching: false,
+    items: []
+  }, action) => {
+  switch (action.type) {
+    case REQUEST_POSTS:
+      return {
+        ...state,
+        isFetching: true,
+      }
+    case RECEIVE_POSTS:
+      return {
+        ...state,
+        isFetching: false,
+        items: action.posts
+      }
     default:
       return state
   }
@@ -44,7 +72,8 @@ const comments = (state = {}, action) => {
 }
 
 export default combineReducers({
+  blogApp,
   categories,
   posts,
-  comments
+  // comments
 });

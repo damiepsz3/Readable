@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route, Link } from 'react-router-dom'
 import '../App.css'
-import { fetchPosts, fetchCategories, fetchComments } from '../actions'
+import { fetchCategories } from '../actions'
+import { fetchPostsIfNeeded } from '../actions/posts.js'
 
 class App extends Component {
   state = {
@@ -10,8 +11,9 @@ class App extends Component {
   }
 
   componentDidMount () {
-    this.props.getPosts()
     this.props.getCategories()
+    this.props.getPosts()
+
   }
 
   render() {
@@ -38,15 +40,31 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ posts, categories }) => {
-
+const mapStateToProps = ({ blogApp, posts, categories }) => {
+  return {
+    // blogApp,
+    // // blogData: categories.reduce((acum, cat) => {
+    // //   acum.push({
+    // //     posts: posts.filter(post => post.category === cat.name),
+    // //     ...cat
+    // //   })
+    // //   return acum
+    // // },[])
+    // blogData: posts.reduce((acum, post) => {
+    //   acum.push({
+    //     ...post,
+    //     category: categories.find((cat) => cat.name === post.category)
+    //   })
+    //   return acum
+    // }, [])
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPosts: (data) => dispatch(fetchPosts(data)),
+    getPosts: (data) => dispatch(fetchPostsIfNeeded(data)),
     getCategories: (data) => dispatch(fetchCategories(data)),
-    getComments: (data) => dispatch(fetchComments(data))
+    // getComments: (data) => dispatch(fetchComments(data))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App)
