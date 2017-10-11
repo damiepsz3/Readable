@@ -1,25 +1,28 @@
-  import { createReducer, updateObject, updateItemInArray } from '../helper.js'
+import { createReducer, updateObject, updateItemInArray } from '../helper.js'
+import { normalize, schema } from 'normalizr'
 
+const categoriesSchema = new schema.Entity('categories', {}, {idAttribute: 'name'})
+const categoriesListSchema = new schema.Array(categoriesSchema)
 
 const initialState = {
   isFetching: false,
-  items: []
+  byId: {},
+  allIds: []
 }
 
-const receiveCategories = (postState, action) => {
-  console.log(action)
+const receiveCategories = (state, action) => {
+  const normalizedCategories = normalize(action.categories, categoriesListSchema)
   return {
-    ...postState,
+    ...state,
     isFetching: action.fetching, //review
-    items: [
-      ...action.categories
-    ]
+    byId: normalizedCategories.entities.categories,
+    allIds: normalizedCategories.result
   }
 }
 
-const requestCategories = (postState, action) => {
+const requestCategories = (state, action) => {
   return {
-    ...postState,
+    ...state,
     isFetching: action.fetching
   }
 }
