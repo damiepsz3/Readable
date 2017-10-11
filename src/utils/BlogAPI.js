@@ -1,3 +1,9 @@
+import { normalize, schema } from 'normalizr'
+
+const postSchema = new schema.Entity('post');
+const commentSchema = new schema.Entity('comment')
+const categorySchema = new schema.Entity('category')
+
 const api = "http://localhost:5001"
 
 let token = localStorage.token
@@ -13,7 +19,7 @@ const headers = {
 export const getCategories = () =>
   fetch(`${api}/categories`, { headers })
     .then(res => res.json())
-    .then(data => data.categories)
+    .then(data => data.categories.map(cat => normalize(cat, categorySchema)))
 
 export const getCatPost = (category) =>
   fetch(`${api}/${category}/posts`, { headers })

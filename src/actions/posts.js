@@ -26,7 +26,8 @@ const fetchPosts = () => {
 
 const shouldFetchPosts = (state) => {
   const posts = state.posts
-  if(!posts.items.length && !posts.isFetching) {
+  const { isFetching } = state
+  if(!posts && !isFetching) {
     return true
   } else {
     return false
