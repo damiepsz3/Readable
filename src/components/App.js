@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route, Link } from 'react-router-dom'
 import '../App.css'
-import { fetchCategories } from '../actions'
 import { fetchPostsIfNeeded } from '../actions/posts.js'
+import { fetchCategoriesIfNeeded } from '../actions/categories.js'
 
 class App extends Component {
   state = {
@@ -63,7 +63,7 @@ const mapStateToProps = ({ blogApp, posts, categories }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getPosts: (data) => dispatch(fetchPostsIfNeeded(data)),
-    getCategories: (data) => dispatch(fetchCategories(data)),
+    getCategories: (data) => dispatch(fetchCategoriesIfNeeded(data)),
     // getComments: (data) => dispatch(fetchComments(data))
   }
 }

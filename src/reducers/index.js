@@ -1,28 +1,10 @@
 import { combineReducers } from 'redux'
-import { postReducer } from './postReducer.js'
-import {
-  GET_CATEGORIES,
-  GET_COMMENTS,
-  SET_FETCHING_INFO,
-} from '../actions'
+import entities from './entities'
+import uiState from './uistate'
 
-
-
-
-const initialState = {
-  appState: {
-    visibility: {},
-    isFetching: false
-  },
-  domainData: {
-    posts:[],
-    categories: [],
-    comments: []
-  }
-}
 
 export default combineReducers({
-  post: postReducer
+  entities
 })
 
 //
