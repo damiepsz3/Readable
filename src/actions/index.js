@@ -70,7 +70,7 @@ const fetchPostComment = () => {
       .then(resp => dispatch(receivePosts(resp)))
       .then(action => action.posts.map(post => {
         dispatch(requestComments())
-        BlogAPI.postComments(post.id)
+        return BlogAPI.postComments(post.id)
           .then(resp => dispatch(receiveComments(resp, post.id)))
         })
       )}

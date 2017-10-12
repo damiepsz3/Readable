@@ -1,4 +1,4 @@
-import { createReducer, updateObject, updateItemInArray } from '../helper.js'
+import { createReducer } from '../helper.js'
 import { normalize, schema } from 'normalizr'
 
 const categoriesSchema = new schema.Entity('categories', {}, {idAttribute: 'name'})

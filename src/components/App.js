@@ -2,15 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 import '../App.css'
-// import { fetchPostsIfNeeded } from '../actions/posts.js'
 import { firstCall } from '../actions'
+import PostCard from './PostCard'
 
 class App extends Component {
-  s
 
   componentDidMount () {
     this.props.getInfo()
-    // this.props.getPosts()
 
   }
 
@@ -29,16 +27,20 @@ class App extends Component {
                   <span>{cat.name}</span>
                 </li>
               ))}
+              {posts.map( post => (
+                <li key={post.id}>
+                  <PostCard title={post.title} author={post.author} comments={post.comments} />
+                </li>
+              ))}
             </div>
-            <button onClick={() => this.props.receives()}>Click</button>
           </div>
         )} />
       </div>
-    );
+    )
   }
 }
 
-const mapStateToProps = ( { entities }) => {
+const mapStateToProps = ({ entities }) => {
   const { categories, posts, comments } = entities
   return {
     blog: {
@@ -48,7 +50,7 @@ const mapStateToProps = ( { entities }) => {
           ...posts.byId[id],
           'comments': posts.byId[id].comments
             ? posts.byId[id].comments.map(comId => comments.byId[comId])
-            : null
+            : []
         }
         acum.push(post)
         return acum
@@ -59,7 +61,8 @@ const mapStateToProps = ( { entities }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getInfo: (data) => dispatch(firstCall(data)),
+    getInfo: () => dispatch(firstCall()),
   }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(App)
