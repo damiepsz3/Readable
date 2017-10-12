@@ -10,21 +10,98 @@ body, .app {
 
 /* main page */
 
-.blog-categories-title {
+.blog-title {
   padding: 10px 0;
   background: #2e7c31;
   text-align: center;
+  margin-bottom: 10px;
+  box-shadow: 0 0 0 3px #ccc;
+
 }
-.blog-categories-title h1 {
+.blog-title h1 {
   font-weight: 400;
   margin: 0;
   color: white;
 }
 
-.blog-categories-content {
+.blog-content {
   padding: 0 0 80px;
   flex: 1;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  width: 60%;
+  padding: 10px;
+  border: 1px solid;
 }
+
+.blog-categories ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 30px;
+  border: 1px solid #4CAF50;
+  border-radius: 6px;
+}
+
+.blog-categories li {
+  border: 0 0 1px 0 solid;
+}
+
+.blog-categories button {
+  background-color: #4CAF50; /*check*/
+  border: 0;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px; /*check*/
+  margin: 0;
+  cursor: pointer;
+  width: 100%;
+}
+
+.blog-categories button:hover {
+   background-color: grey;
+}
+
+
+.blog-posts ul {
+  list-style-type: none;
+  padding: 0 10px;
+  margin: 10px 30px;
+}
+
+.post-card {
+  margin: 0 0 10px;
+  padding: 3px 5px;
+  background: grey;
+  width:  600px;
+  border-radius: 6px;
+  box-shadow: 1.5px 1.5px #ccc;
+  position: relative;
+}
+
+.post-card-info {
+
+}
+
+.post-card-vote {
+  position: absolute;
+  top: 20px;
+  right: 3px;
+
+}
+
+
+.post-card-info h3 {
+  margin: 3px 0;
+}
+
+.post-card-info p {
+  margin: 3px 0;
+}
+
+
 
 .bookshelf {
   padding: 0 10px 20px;

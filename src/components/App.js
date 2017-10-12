@@ -17,21 +17,29 @@ class App extends Component {
     return (
       <div className="app">
         <Route exact path="/" render={() => (
-          <div className="blog-categories">
-            <div className="blog-categories-title">
+          <div className="blog">
+            <div className="blog-title">
               <h1>Readable</h1>
             </div>
-            <div className="blog-categories-content">
-              {categories.map((cat) => (
-                <li key={cat.name} className={cat.name}>
-                  <span>{cat.name}</span>
-                </li>
-              ))}
-              {posts.map( post => (
-                <li key={post.id}>
-                  <PostCard title={post.title} author={post.author} comments={post.comments} />
-                </li>
-              ))}
+            <div className="blog-content">
+              <div className="blog-categories">
+                <ul>
+                  {categories.map((cat) => (
+                    <li key={cat.name}>
+                      <button>{cat.name}</button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="blog-posts">
+                <ul>
+                  {posts.map( post => (
+                    <li key={post.id}>
+                      <PostCard id={post.id} title={post.title} author={post.author} comments={post.comments} voteScore={post.voteScore} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         )} />

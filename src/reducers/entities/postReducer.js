@@ -28,8 +28,7 @@ const requestPosts = (state, action) => {
 }
 
 const receiveComments = (state, action) => {
-  const parentId = action.parentId
-  const comments = action.comments
+  const { parentId, comments } = action
   return {
     ...state,
     byId: {
@@ -42,10 +41,25 @@ const receiveComments = (state, action) => {
   }
 }
 
+const updateVote = (state, action) => {
+  const { id, option } = action
+  return {
+    ...state,
+    byId: {
+      ...state.byId,
+      [id]: {
+        ...state.byId[id],
+        'voteScore': option === 'upVote' ? state.byId[id].voteScore + 1 : state.byId[id].voteScore - 1
+      }
+    }
+  }
+}
+
 const postReducer = createReducer(initialState, {
   'REQUEST_POSTS': requestPosts,
   'RECEIVE_POSTS': receivePosts,
   'RECEIVE_COMMENT': receiveComments,
+  'POST_VOTE': updateVote
 });
 
 export default postReducer
