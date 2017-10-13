@@ -6,7 +6,12 @@ const categoriesListSchema = new schema.Array(categoriesSchema)
 
 const initialState = {
   isFetching: false,
-  byId: {},
+  byId: {
+    showAll: {
+      name:'show all',
+      path:''
+    }
+  },
   allIds: []
 }
 
@@ -14,8 +19,8 @@ const receiveCategories = (state, action) => {
   const normalizedCategories = normalize(action.categories, categoriesListSchema)
   return {
     ...state,
-    isFetching: action.fetching, //review
-    byId: normalizedCategories.entities.categories,
+    isFetching: action.fetching,
+    byId: {...state.byId, ...normalizedCategories.entities.categories},
     allIds: normalizedCategories.result
   }
 }

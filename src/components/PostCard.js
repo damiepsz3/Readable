@@ -1,24 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import { voteIssuing } from '../actions'
 
 class PostCard extends Component {
-  static propTypes = {
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
-    comments: PropTypes.array.isRequired,
-    voteScore: PropTypes.number.isRequired
-  }
 
   render() {
-    const { title, author, comments, voteScore, id, postVote } = this.props
+    const { postVote, posts } = this.props
+    const { title, author, comments, voteScore, id, category } = posts.find((post) => post.id === this.props.id)
+
     return (
       <div className='post-card'>
         <div className='post-card-info'>
+          <span>{category}</span>
           <h3>{title}</h3>
-          <p>Posted by {author}. <a>{comments.length} comments</a></p>
+          <p>Posted by {author}. <a>{comments ? comments.length : 0} comments</a></p>
         </div>
         <div className='post-card-vote'>
           <button onClick={() => postVote(id, 'upVote')}>Upvote</button>
@@ -36,9 +31,16 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const mapStateToProps = () => {
+const mapStateToProps = ({ entities }) => {
+  const { posts } = entities
   return {
-
+    posts: Object.keys(posts.byId).reduce((acum, id) => {
+      const post = {
+        ...posts.byId[id]
+      }
+      acum.push(post)
+      return acum
+    },[])
   }
 }
 
