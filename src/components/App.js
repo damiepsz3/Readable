@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Route, Link } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import '../App.css'
 import { firstCall } from '../actions'
-import PostsContent from './PostsContent'
-
+import MainContainer from './MainContainer'
 class App extends Component {
 
   componentDidMount () {
@@ -12,54 +11,31 @@ class App extends Component {
   }
 
   render() {
-    const { categories, posts } = this.props.blog
+    const { categories, posts, path, name } = this.props
     return (
       <div className="blog">
         <div className="blog-title">
-          <h1>Readable</h1>
+          <h1>Readable Blog</h1>
         </div>
-        <div className="blog-content">
-          <div className="blog-categories">
-            <ul>
-              {categories.map((cat) => (
-                <li key={cat.name}>
-                  <button>
-                    <Link to={`/${cat.path}`}>
-                      {cat.name}
-                    </Link>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {categories.map(category => (
+        {categories.map(category => (
             <Route
-              key={category.path} exact path={`/${category.path}`} render={() => <PostsContent category={category} posts={posts}/>}/>
+              key={category.path} exact path={`/${category.path}`} render={() => (
+              <MainContainer/>
+              )}/>
           ))}
-        </div>
-
       </div>
     )
   }
 }
 
 
-const mapStateToProps = ({ entities }) => {
+const mapStateToProps = ({ entities, uiState }) => {
   const { categories, posts } = entities
+  const { path, name } = uiState.categoryFilter
   return {
-    blog: {
-      categories: Object.keys(categories.byId).map(id => categories.byId[id]),
-      posts: Object.keys(posts.byId).reduce((acum, id) => {
-        acum.push({
-          id: posts.byId[id].id,
-          category: posts.byId[id].category,
-          voteScore: posts.byId[id].voteScore,
-          time: posts.byId[id].timestamp,
-        })
-        return acum
-      }, [])
-    }
+    categories: Object.keys(categories.byId).map(id => categories.byId[id]),
+    path,
+    name
   }
 }
 
