@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
-import PostsContent from './PostsContent'
+import PostsList from './PostsList'
 import CategoriesList from './CategoriesList'
+import { Route } from 'react-router-dom'
 
-export default class MainContainer extends Component {
+class MainContainer extends Component {
+
   render() {
-    const { category, posts } = this.props
     return (
     <div className="blog-content">
       <CategoriesList/>
-      <PostsContent/>
+      <Route exact path="/:category" component={PostsList}/>
     </div>
     );
   }
 }
+
+
+export default MainContainer

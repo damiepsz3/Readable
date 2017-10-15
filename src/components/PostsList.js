@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import PostCard from './PostCard'
 import { connect } from 'react-redux'
 
-
-class PostsContent extends Component {
+class PostsList extends Component {
   render() {
-    const {name, posts} = this.props
-    console.log(posts)
-    const postPrint = name !== 'SHOW_ALL' ? posts.filter(post => post.category === name ) : posts
+    const {category, posts} = this.props
+    const postPrint = category ? posts.filter(post => post.category === category) : posts
     return (
       <div className="blog-posts">
         <ul>
@@ -21,8 +19,7 @@ class PostsContent extends Component {
    )}
 }
 
-const mapStateToProps = ({ entities, uiState}) => {
-  const { name } = uiState.categoryFilter
+const mapStateToProps = ({ entities }, ownProps) => {
   const { posts } = entities
   return {
     posts: Object.keys(posts.byId).reduce((acum, id) => {
@@ -34,10 +31,10 @@ const mapStateToProps = ({ entities, uiState}) => {
       })
       return acum
     }, []),
-    name
+    category: ownProps.match.params.category || null
   }
 }
 
 // const mapDispatchToProps = () => {return {}}
 
-export default connect(mapStateToProps,)(PostsContent)
+export default connect(mapStateToProps  )(PostsList)

@@ -8,7 +8,7 @@ export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 export const REQUEST_COMMENT = 'REQUEST_COMMENT'
 export const RECEIVE_COMMENT = 'RECEIVE_COMMENT'
 export const POST_VOTE = 'POST_VOTE'
-export const CHANGE_CATEGORY = 'CHANGE_CATEGORY'
+
 
 const requestComments = () => {
   return {
@@ -65,13 +65,6 @@ const postVote = (id, option) => {
   }
 }
 
-export const changeCategory = (path, name) => {
-  return {
-    type: CHANGE_CATEGORY,
-    path,
-    name
-  }
-}
 
 const fetchCategories = () => {
   return dispatch => {
