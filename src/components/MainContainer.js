@@ -9,6 +9,7 @@ class MainContainer extends Component {
     return (
     <div className="blog-content">
       <CategoriesList/>
+      <Route exact path="/" component={PostsList}/>
       <Route exact path="/:category" component={PostsList}/>
     </div>
     );

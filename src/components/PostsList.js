@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 class PostsList extends Component {
   render() {
     const {category, posts} = this.props
-    const postPrint = category ? posts.filter(post => post.category === category) : posts
+    const postPrint = category !== '/' ? posts.filter(post => post.category === category) : posts
     return (
       <div className="blog-posts">
         <ul>
@@ -31,7 +31,7 @@ const mapStateToProps = ({ entities }, ownProps) => {
       })
       return acum
     }, []),
-    category: ownProps.match.params.category || null
+    category: ownProps.match.params.category || '/'
   }
 }
 

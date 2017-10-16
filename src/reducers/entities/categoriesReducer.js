@@ -9,7 +9,7 @@ const initialState = {
   byId: {
     showAll: {
       name:'show all',
-      path: null
+      path:''
     }
   },
   allIds: []
