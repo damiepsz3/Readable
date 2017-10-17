@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import PostsList from './PostsList'
-import CategoriesList from './CategoriesList'
+import Lists from './Lists'
+import Post from './Post'
 import { Route } from 'react-router-dom'
 
 class MainContainer extends Component {
 
   render() {
     return (
-    <div className="blog-content">
-      <CategoriesList/>
-      <Route exact path="/" component={PostsList}/>
-      <Route exact path="/:category" component={PostsList}/>
+    <div >
+      <Route exact path="/" component={Lists}/>
+      <Route exact path="/:category" component={Lists}/>
+      <Route exact path="/:category/:id" component={Post}/>
     </div>
     );
   }

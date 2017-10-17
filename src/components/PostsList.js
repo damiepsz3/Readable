@@ -9,11 +9,15 @@ class PostsList extends Component {
     return (
       <div className="blog-posts">
         <ul>
-          {postPrint.map(post => (
-            <li key={post.id}>
-              <PostCard id={post.id} />
-            </li>
-          ))}
+          {postPrint.length ?
+            postPrint.map(post => (
+              <li key={post.id}>
+                <PostCard id={post.id} />
+              </li>
+            ))
+            :
+            <h3>There is not post under {category} </h3>
+        }
         </ul>
       </div>
    )}
@@ -31,10 +35,10 @@ const mapStateToProps = ({ entities }, ownProps) => {
       })
       return acum
     }, []),
-    category: ownProps.match.params.category || '/'
+    category: ownProps.category || '/'
   }
 }
 
 // const mapDispatchToProps = () => {return {}}
 
-export default connect(mapStateToProps  )(PostsList)
+export default connect(mapStateToProps )(PostsList)

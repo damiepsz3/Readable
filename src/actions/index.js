@@ -8,6 +8,8 @@ export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 export const REQUEST_COMMENT = 'REQUEST_COMMENT'
 export const RECEIVE_COMMENT = 'RECEIVE_COMMENT'
 export const POST_VOTE = 'POST_VOTE'
+export const REQUEST_POST = 'REQUEST_POST'
+export const RECEIVE_POST = 'RECEIVE_POST'
 
 
 const requestComments = () => {
@@ -65,6 +67,21 @@ const postVote = (id, option) => {
   }
 }
 
+const requestPost = () => {
+  return {
+    type: REQUEST_POST,
+    fetching: true
+  }
+}
+
+const receivePost = (post) => {
+  return {
+    type: RECEIVE_POST,
+    fetching: false,
+    post
+  }
+}
+
 
 const fetchCategories = () => {
   return dispatch => {
@@ -87,6 +104,14 @@ const fetchPostComment = () => {
       )}
 }
 
+
+export const fetchPost = (id) => (dispatch, getState) => {
+  if(!getState().entities.posts.byId.hasOwnProperty(id)) {
+    dispatch(requestPost())
+    return BlogAPI.postDetail(id)
+      .then(resp => dispatch(receivePost(resp)))
+  }
+}
 
 
 export const firstCall = () => (dispatch, getState) => {

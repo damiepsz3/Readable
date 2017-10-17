@@ -27,6 +27,26 @@ const requestPosts = (state, action) => {
   }
 }
 
+const receivePost = (state, action) => {
+  const normalizedPost = normalize(action.post, postSchema)
+  return {
+    ...state,
+    isFetching: action.fetching,
+    byId: {
+      ...state.byId,
+      ...normalizedPost.entities.post
+    },
+    allIds: state.allIds.concat(normalizedPost.result)
+  }
+}
+
+const requestPost = (state, action) => {
+  return {
+    ...state,
+    isFetching: action.fetching
+  }
+}
+
 const receiveComments = (state, action) => {
   const { parentId, comments } = action
   return {
@@ -59,7 +79,9 @@ const postReducer = createReducer(initialState, {
   'REQUEST_POSTS': requestPosts,
   'RECEIVE_POSTS': receivePosts,
   'RECEIVE_COMMENT': receiveComments,
-  'POST_VOTE': updateVote
+  'POST_VOTE': updateVote,
+  'REQUEST_POST': requestPost,
+  'RECEIVE_POST': receivePost
 });
 
 export default postReducer

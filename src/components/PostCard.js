@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { voteIssuing } from '../actions'
 
@@ -13,7 +13,7 @@ class PostCard extends Component {
       <div className='post-card'>
         <div className='post-card-info'>
           <span>{category}</span>
-          <h3>{title}</h3>
+          <h3><Link to={`/${category}/${id}`}>{title}</Link></h3>
           <p>Posted by {author}. <a>{comments ? comments.length : 0} comments</a></p>
         </div>
         <div className='post-card-vote'>
