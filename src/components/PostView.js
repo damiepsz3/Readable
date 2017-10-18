@@ -6,7 +6,7 @@ import Spinner from 'react-spinkit';
 
 class PostView extends Component {
   componentDidMount() {
-    this.props.getPost(this.props.match.params.id)
+    this.props.getPost(this.props.id)
   }
 
   render() {
@@ -32,6 +32,7 @@ const mapStateToProps = ({ entities }, ownProps) => {
   const post = entities.posts.byId[id] || {}
   const isFetching = entities.posts.isFetching
   return {
+    id: id,
     title: post.title || null,
     author: post.author || null,
     body: post.body || null,
