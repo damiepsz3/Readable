@@ -113,6 +113,13 @@ export const fetchPost = (id) => (dispatch, getState) => {
   }
 }
 
+export const fetchComments = (postId) => (dispatch, getState) => {
+  if(shouldFetchComment(postId,getState)){
+    dispatch(requestComments())
+    return BlogAPI.postComments(postId)
+      .then(resp => dispatch(receiveComments(resp, postId)))
+  }
+}
 
 export const firstCall = () => (dispatch, getState) => {
   if(createShouldFetch('entities','posts')(getState())) {
@@ -126,4 +133,9 @@ export const firstCall = () => (dispatch, getState) => {
 export const voteIssuing = (id, option) => (dispatch) => {
   return BlogAPI.postVote(id, option)
     .then(resp => dispatch(postVote(id, option)))
+}
+
+const shouldFetchComment = (postId, getState) => {
+  const comments = getState().entities.comments.byId
+  return !Object.keys(comments).map(comId => comments[comId].parentId).includes(postId)
 }

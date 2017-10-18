@@ -1,30 +1,31 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import React, {Component} from 'react';
+import { withRouter } from 'react-router'
 import { fetchPost } from '../actions'
+import { connect } from 'react-redux'
+import Spinner from 'react-spinkit';
 
-class Post extends Component {
+class PostView extends Component {
   componentDidMount() {
     this.props.getPost(this.props.match.params.id)
   }
 
   render() {
-    const { isFetching, title, author, body } = this.props
+    const { title, author, body, isFetching } = this.props
     return (
-      <div>
-        {isFetching ?
-          <span> descargando</span>
-          :
-          <div>
-            <h1>{title}</h1>
-            <span>{author}</span>
-            <p>{body}</p>
-          </div>
-        }
-      </div>
-    );
+    <div>
+      {isFetching ?
+        <Spinner name="ball-zig-zag-deflect" color="green"/>
+      :
+        <div>
+          <h1>{title}</h1>
+          <span>{author}</span>
+          <p>{body}</p>
+        </div>
+      }
+
+    </div>);
   }
 }
-
 
 const mapStateToProps = ({ entities }, ownProps) => {
   const { id } = ownProps.match.params
@@ -44,4 +45,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Post)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostView))
