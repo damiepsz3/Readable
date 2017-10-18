@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PostCard from './PostCard'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+
 
 class PostsList extends Component {
   render() {
@@ -25,6 +27,7 @@ class PostsList extends Component {
 
 const mapStateToProps = ({ entities }, ownProps) => {
   const { posts } = entities
+  const { category } = ownProps.match.params
   return {
     posts: Object.keys(posts.byId).reduce((acum, id) => {
       acum.push({
@@ -35,10 +38,10 @@ const mapStateToProps = ({ entities }, ownProps) => {
       })
       return acum
     }, []),
-    category: ownProps.category || '/'
+    category: category || '/'
   }
 }
 
 // const mapDispatchToProps = () => {return {}}
 
-export default connect(mapStateToProps )(PostsList)
+export default withRouter(connect(mapStateToProps )(PostsList))
