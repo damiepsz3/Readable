@@ -5,15 +5,15 @@ const initialState = {
     { value: 'DATE_LH', label: 'Date: Low to High' },
     { value: 'DATE_HL', label: 'Date: High to Low' },
     { value: 'SCORE_LH', label: 'Score: Low to High'},
-    { value: 'SCORE_LH', label: 'Score: High to Low'}
+    { value: 'SCORE_HL', label: 'Score: High to Low'}
   ],
   selected: 'NO_SORT'
 }
 
-const selectSort = (action, state) => {
+const selectSort = (state, action) => {
   return {
     ...state,
-    select: action.value
+    selected: action.value
   }
 }
 
