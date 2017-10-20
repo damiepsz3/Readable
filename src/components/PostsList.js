@@ -9,14 +9,13 @@ class PostsList extends Component {
   render() {
     const {category, posts, selected} = this.props
     const postPrint = category !== '/' ? posts.filter(post => post.category === category) : posts
-    console.log(postPrint)
     return (
       <div className="blog-posts">
         <ul>
           {postPrint.length ?
             postPrint.filter(post => !post.deleted).sort(sortBy(selected.value)).map(post => (
               <li key={post.id}>
-                <PostCard id={post.id} />
+                <PostCard idSelected={post.id} />
               </li>
             ))
             :

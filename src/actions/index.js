@@ -11,6 +11,7 @@ export const POST_VOTE = 'POST_VOTE'
 export const REQUEST_POST = 'REQUEST_POST'
 export const RECEIVE_POST = 'RECEIVE_POST'
 export const SELECT_SORT = 'SELECT_SORT'
+export const DELETE_POST = 'DELETE_POST'
 
 
 const requestComments = () => {
@@ -88,6 +89,18 @@ export const selectSort = (value) => {
     type: SELECT_SORT,
     value
   }
+}
+
+const deletePost = (id) => {
+  return {
+    type: DELETE_POST,
+    id
+  }
+}
+
+export const deletePostCall = (id) => dispatch => {
+  return BlogAPI.postDelete(id)
+    .then(resp => dispatch(deletePost(id)))
 }
 
 const fetchCategories = () => {

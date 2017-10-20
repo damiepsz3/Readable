@@ -69,7 +69,21 @@ const updateVote = (state, action) => {
       ...state.byId,
       [id]: {
         ...state.byId[id],
-        'voteScore': option === 'upVote' ? state.byId[id].voteScore + 1 : state.byId[id].voteScore - 1
+        voteScore: option === 'upVote' ? state.byId[id].voteScore + 1 : state.byId[id].voteScore - 1
+      }
+    }
+  }
+}
+
+const deletePost = (state, action) => {
+  const { id } = action
+  return {
+    ...state,
+    byId: {
+      ...state.byId,
+      [id]: {
+        ...state.byId[id],
+        deleted: true
       }
     }
   }
@@ -81,7 +95,8 @@ const postReducer = createReducer(initialState, {
   'RECEIVE_COMMENT': receiveComments,
   'POST_VOTE': updateVote,
   'REQUEST_POST': requestPost,
-  'RECEIVE_POST': receivePost
+  'RECEIVE_POST': receivePost,
+  'DELETE_POST': deletePost
 });
 
 export default postReducer

@@ -1,21 +1,22 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { voteIssuing } from '../actions'
+import { voteIssuing, deletePostCall } from '../actions'
 
 
 class PostCard extends Component {
 
   render() {
-    const { postVote, posts } = this.props
-    const { title, author, comments, voteScore, id, category } = posts.find((post) => post.id === this.props.id)
-
+    const { deletePost, postVote, post } = this.props
+    const { title, author, comments, voteScore, id, category } = post
     return (
       <div className='post-card'>
         <div className='post-card-info'>
           <span>{category}</span>
           <h3><Link to={`/${category}/${id}`}>{title}</Link></h3>
           <p>Posted by {author}. <a>{comments ? comments.length : 0} comments</a></p>
+          <button onClick={() => deletePost(id)}>Delete</button>
+          <button>Edit</button>
         </div>
         <div className='post-card-vote'>
           <button onClick={() => postVote(id, 'upVote')}>Upvote</button>
@@ -29,20 +30,14 @@ class PostCard extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    postVote: (id, option) => dispatch(voteIssuing(id, option))
+    postVote: (id, option) => dispatch(voteIssuing(id, option)),
+    deletePost: (id) => dispatch(deletePostCall(id))
   }
 }
 
-const mapStateToProps = ({ entities }) => {
-  const { posts } = entities
+const mapStateToProps = ({ entities }, ownProps) => {
   return {
-    posts: Object.keys(posts.byId).reduce((acum, id) => {
-      const post = {
-        ...posts.byId[id]
-      }
-      acum.push(post)
-      return acum
-    },[])
+    post: entities.posts.byId[ownProps.idSelected]
   }
 }
 
