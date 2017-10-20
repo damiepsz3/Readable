@@ -2,10 +2,10 @@ import { createReducer } from '../helper.js'
 
 const initialState = {
   options: [
-    { value: 'DATE_LH', label: 'Date: Low to High' },
-    { value: 'DATE_HL', label: 'Date: High to Low' },
-    { value: 'SCORE_LH', label: 'Score: Low to High'},
-    { value: 'SCORE_HL', label: 'Score: High to Low'}
+    { value: 'time', label: 'Date: Low to High' },
+    { value: '-time', label: 'Date: High to Low' },
+    { value: 'voteScore', label: 'Score: Low to High'},
+    { value: '-voteScore', label: 'Score: High to Low'}
   ],
   selected: 'NO_SORT'
 }

@@ -2,31 +2,19 @@ import React, { Component } from 'react';
 import PostCard from './PostCard'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import sortBy from 'sort-by'
 
 
 class PostsList extends Component {
   render() {
-    const {category, posts, sortBy} = this.props
-    let postPrint = category !== '/' ? posts.filter(post => post.category === category) : posts
-    switch(sortBy) {
-      case 'DATE_LH':
-        // postPrint = postPrint.sort()
-        break;
-      case 'DATE_HL':
-        break;
-      case 'SCORE_LH':
-        break;
-      case 'SCORE_HL':
-        break;
-      default:
-        break;
-
-    }
+    const {category, posts, selected} = this.props
+    const postPrint = category !== '/' ? posts.filter(post => post.category === category) : posts
+    console.log(postPrint)
     return (
       <div className="blog-posts">
         <ul>
           {postPrint.length ?
-            postPrint.map(post => (
+            postPrint.filter(post => !post.deleted).sort(sortBy(selected.value)).map(post => (
               <li key={post.id}>
                 <PostCard id={post.id} />
               </li>
@@ -50,11 +38,12 @@ const mapStateToProps = ({ entities, uiState }, ownProps) => {
         category: posts.byId[id].category,
         voteScore: posts.byId[id].voteScore,
         time: posts.byId[id].timestamp,
+        deleted: posts.byId[id].deleted
       })
       return acum
     }, []),
     category: category || '/',
-    sortBy: sortBy.selected
+    selected: sortBy.selected
   }
 }
 

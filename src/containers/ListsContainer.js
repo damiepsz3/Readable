@@ -15,7 +15,7 @@ class ListsContainer extends Component {
   }
 
   render() {
-    const { options, selected, sortBy } = this.props
+    const { options, sortBy, selected } = this.props
     return (
       <div className="blog-content">
         <CategoriesList/>
