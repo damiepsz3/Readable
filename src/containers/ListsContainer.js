@@ -17,12 +17,12 @@ class ListsContainer extends Component {
   render() {
     const { options, sortBy, selected } = this.props
     return (
-      <div className="blog-content">
+      <div className="blog-list">
         <CategoriesList/>
-        <div>
-          <Select value={selected} options={options} onChange={sortBy}/>
-          <PostsList />
+        <div className="sort-breadcumb">
+          <Select className="sort-dropdown" value={selected} options={options} onChange={sortBy}/>
         </div>
+        <PostsList/>
       </div>
     )}
 }

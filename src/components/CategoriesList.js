@@ -8,17 +8,13 @@ class CategoriesList extends Component {
     const { categories } = this.props
     return (
       <div className="blog-categories">
-        <ul>
+        <nav>
           {categories.map((cat) => (
-            <li key={cat.name}>
-              <button>
-                <Link to={`/${cat.path}`}>
-                  {cat.name}
-                </Link>
-              </button>
-            </li>
+            <Link key={cat.path} to={`/${cat.path}`}>
+              {cat.name}
+            </Link>
           ))}
-        </ul>
+        </nav>
     </div>
     );
   }

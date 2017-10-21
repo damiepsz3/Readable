@@ -7,7 +7,7 @@ class MainContainer extends Component {
 
   render() {
     return (
-    <div>
+    <div className='main-container'>
       <Route exact path="/" component={ListsContainer}/>
       <Route exact path="/:category" component={ListsContainer}/>
       <Route exact path="/:category/:id" component={PostContainer}/>
