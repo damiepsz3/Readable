@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-
+import capitalize from 'capitalize'
 
 class CategoriesList extends Component {
   render() {
@@ -11,7 +11,7 @@ class CategoriesList extends Component {
         <nav>
           {categories.map((cat) => (
             <Link key={cat.path} to={`/${cat.path}`}>
-              {cat.name}
+              {capitalize.words(cat.name)}
             </Link>
           ))}
         </nav>

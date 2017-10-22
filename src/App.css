@@ -8,6 +8,10 @@ body, .app {
   background: white;
 }
 
+a {
+  text-decoration: none;
+}
+
 .blog {
   display: grid;
   grid-template-columns: [margin-left] 250px [main-start] auto [main-finish] 250px [margin-right];
@@ -38,7 +42,7 @@ body, .app {
 .blog-list {
   display: grid;
   grid-template-columns: 200px auto;
-  grid-template-rows: 40px auto;
+  grid-template-rows: 50px auto;
 }
 
 .blog-categories {
@@ -57,7 +61,7 @@ body, .app {
 .blog-list nav a {
   line-height: 40px;
   padding-left: 20px;
-  font-size: 1.2em;
+  font-size: 1em;
   border-top: 0.5px solid rgba(0,0,0,.2);
   text-decoration: none;
 }
@@ -65,16 +69,17 @@ body, .app {
 .sort-breadcumb {
   grid-row: 1/2;
   grid-column: 2/3;
-
   display: grid;
-  grid-template-columns: 180px auto 180px;
-  grid-template-rows: auto 10px;
+  grid-template-columns: 180px auto 300px;
 }
+
+.sort-breadcumb h3 {
+  grid-column: 1/2;
+  margin: 7px 0px 0px 0px;
+}
+
 .sort-dropdown {
-  grid-row: 1/2;
   grid-column: 3/4;
-  box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, .2);
-  border-radius: 5px;
 }
 
 .blog-posts {
@@ -84,13 +89,14 @@ body, .app {
 
 .blog-posts ul {
   margin-top: 0;
+  padding: 0;
 }
 
 .blog-posts li {
   list-style-type: none;
   box-shadow: 1px 1px 0.5px 0.8px rgba(0, 0, 0, .2);
   border-radius: 5px;
-  padding: 10px 0px 10px 20px;
+  padding: 10px 10px 10px 20px;
   margin-bottom: 10px;
 }
 
@@ -101,13 +107,41 @@ body, .app {
 
 .post-card-info {
   grid-column: 1/2;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.post-card-info span a{
+  padding: .5px 5px;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 5px;
+  margin: 0px 0px 10px 0px;
+  background-color: #c2e0ff;
+  color: #3672af;
+  font-size: .9em;
+}
+
+.post-card-info h3 {
+  margin: 0 0 10px 0;
+}
+
+.post-card-info p {
+  margin: 0 0 10px 0;
 }
 
 .post-card-vote {
   grid-column: 3/4;
-
   display: flex;
   align-items: center;
   justify-content: center;
+}
 
+.post-card-vote span {
+  padding: 12px 18px;
+  margin: 10px;
+  border: 1px solid;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 1em;
 }

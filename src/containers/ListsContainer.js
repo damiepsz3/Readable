@@ -4,6 +4,7 @@ import CategoriesList from '../components/CategoriesList'
 import { firstCall, selectSort } from '../actions'
 import { connect } from 'react-redux'
 import Select from 'react-select'
+import capitalize from 'capitalize'
 import 'react-select/dist/react-select.css';
 
 
@@ -15,11 +16,12 @@ class ListsContainer extends Component {
   }
 
   render() {
-    const { options, sortBy, selected } = this.props
+    const { options, sortBy, selected, category } = this.props
     return (
       <div className="blog-list">
         <CategoriesList/>
         <div className="sort-breadcumb">
+          <h3>{capitalize.words(category)}</h3>
           <Select className="sort-dropdown" value={selected} options={options} onChange={sortBy}/>
         </div>
         <PostsList/>
@@ -27,10 +29,11 @@ class ListsContainer extends Component {
     )}
 }
 
-const mapStatetoProps = ({ uiState }) => {
+const mapStatetoProps = ({ uiState }, ownProps) => {
   return {
     options: uiState.sortBy.options,
-    selected: uiState.sortBy.selected
+    selected: uiState.sortBy.selected,
+    category: ownProps.match.params.category || 'all categories'
   }
 }
 

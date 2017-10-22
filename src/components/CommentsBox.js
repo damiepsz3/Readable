@@ -17,7 +17,7 @@ class CommentsBox extends Component {
 
   render() {
     const { isFetching, comments } = this.props
-    console.log(comments)
+    // console.log(comments)
     return (
       <div>
         {isFetching ?
