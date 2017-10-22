@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { voteIssuing, deletePostCall } from '../actions'
 import capitalize from 'capitalize'
-import { MdThumbUp, MdThumbDown } from 'react-icons/lib/md'
+import { MdThumbUp, MdThumbDown, MdCreate, MdDelete } from 'react-icons/lib/md'
 
 class PostCard extends Component {
 
@@ -15,16 +15,16 @@ class PostCard extends Component {
         <div className='post-card-info'>
           <span><Link to={`/${category}`}>{capitalize.words(category)}</Link></span>
           <h3><Link to={`/${category}/${id}`}>{title}</Link></h3>
-          <p>By {author}. With {comments ? comments.length : 0} comments</p>
+          <p>By {author}. With {comments ? `${comments.length} comments` : `0 comment`}.</p>
           <div>
-            <button>Edit</button>
-            <button onClick={() => deletePost(id)}>Delete</button>
+            <a className="post-button"><MdCreate/></a>
+            <a className="post-button" onClick={() => deletePost(id)}><MdDelete/></a>
           </div>
         </div>
         <div className='post-card-vote'>
-          <a onClick={() => postVote(id, 'upVote')}><MdThumbUp/></a>
+          <a className="thump-up" onClick={() => postVote(id, 'upVote')}><MdThumbUp/></a>
           <span>{voteScore}</span>
-          <a onClick={() => postVote(id, 'downVote')}><MdThumbDown/></a>
+          <a className="thump-down" onClick={() => postVote(id, 'downVote')}><MdThumbDown/></a>
         </div>
       </div>
     )

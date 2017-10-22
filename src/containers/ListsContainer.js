@@ -22,7 +22,7 @@ class ListsContainer extends Component {
         <CategoriesList/>
         <div className="sort-breadcumb">
           <h3>{capitalize.words(category)}</h3>
-          <Select className="sort-dropdown" value={selected} options={options} onChange={sortBy}/>
+          <Select className="sort-dropdown" value={selected} options={options} onChange={sortBy} resetValue={'SHOW_ALL'}/>
         </div>
         <PostsList/>
       </div>
