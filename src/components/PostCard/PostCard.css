@@ -1,0 +1,92 @@
+.post-card {
+  display: grid;
+  grid-template-columns: 400px auto 180px;
+}
+
+.post-card-info {
+  grid-column: 1/2;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.post-card-info span{
+  padding: .5px 5px;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 5px;
+  margin: 0px 0px 10px 0px;
+  background-color: #c2e0ff;
+  font-size: .9em;
+  margin: 0 0 10px 0;
+}
+
+.post-card-info span a {
+  color: #3672af;
+}
+
+.post-card-info h3 a {
+  color: #3672af;
+}
+
+.post-card-info h3 {
+  margin: 0 0 2px 0;
+}
+
+.post-card-info p {
+  margin: 0 0 10px 0;
+  font-size: 0.8em;
+  font-weight: lighter;
+  color: #224767;
+}
+
+.separator {
+  grid-column: 2/3;
+}
+
+.separator hr {
+  background-color: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.post-card-vote {
+  grid-column: 3/4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.post-card-vote span {
+  padding: 12px 18px;
+  margin: 10px;
+  border: 1px solid rgba(0,0,0,.4);
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.thump-up {
+  border: 1px solid rgba(0,0,0,.4);
+  border-radius: 5px;
+  padding: 8px 10px;
+  background: #78c589;
+  cursor: pointer;
+}
+
+.thump-down {
+  border: 1px solid rgba(0,0,0,.4);
+  border-radius: 5px;
+  padding: 8px 10px;
+  background: #da4848;
+  cursor: pointer;
+}
+
+.post-button {
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 2px 5.5px;
+  margin-right: 5px;
+  color: rgba(0,0,0,.4);
+}
+
+.post-button:hover {
+  color: black;
+}

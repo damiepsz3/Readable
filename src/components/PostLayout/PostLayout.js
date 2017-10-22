@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router'
-import { fetchPost } from '../actions'
+import { fetchPost } from '../../actions'
 import { connect } from 'react-redux'
 import Spinner from 'react-spinkit';
+import './PostLayout.css'
 
 class PostLayout extends Component {
   componentDidMount() {
@@ -12,9 +13,9 @@ class PostLayout extends Component {
   render() {
     const { title, author, body, isFetching } = this.props
     return (
-    <div>
+    <div className='post-layout'>
       {isFetching ?
-        <Spinner name="ball-zig-zag-deflect" color="green"/>
+        <Spinner name="ball-zig-zag-deflect" color="blue"/>
       :
         <div>
           <h1>{title}</h1>

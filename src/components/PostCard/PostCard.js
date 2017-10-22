@@ -1,21 +1,22 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { voteIssuing, deletePostCall } from '../actions'
+import { voteIssuing, deletePostCall } from '../../actions'
+import './PostCard.css'
 import capitalize from 'capitalize'
-import { MdThumbUp, MdThumbDown, MdCreate, MdDelete } from 'react-icons/lib/md'
+import { MdThumbUp, MdThumbDown, MdCreate, MdDelete, MdAccountCircle, MdComment } from 'react-icons/lib/md'
 
 class PostCard extends Component {
 
   render() {
     const { deletePost, postVote, post } = this.props
-    const { title, author, comments, voteScore, id, category } = post
+    const { title, author, comments = [], voteScore, id, category } = post
     return (
       <div className='post-card'>
         <div className='post-card-info'>
           <span><Link to={`/${category}`}>{capitalize.words(category)}</Link></span>
           <h3><Link to={`/${category}/${id}`}>{title}</Link></h3>
-          <p>By {author}. With {comments ? `${comments.length} comments` : `0 comment`}.</p>
+          <p><MdAccountCircle/> by {author}. <MdComment/> {comments.length === 1 ? `${comments.length} comment` : `${comments.length} comments`}.</p>
           <div>
             <a className="post-button"><MdCreate/></a>
             <a className="post-button" onClick={() => deletePost(id)}><MdDelete/></a>

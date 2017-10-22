@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import PostsList from '../components/PostsList'
-import CategoriesList from '../components/CategoriesList'
-import { firstCall, selectSort } from '../actions'
+import PostsList from '../../components/PostsList/PostsList'
+import CategoriesList from '../../components/CategoriesList/CategoriesList'
+import { firstCall, selectSort } from '../../actions'
 import { connect } from 'react-redux'
 import Select from 'react-select'
 import capitalize from 'capitalize'
 import 'react-select/dist/react-select.css';
+import './ListsContainer.css'
 
 
 

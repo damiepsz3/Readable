@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import PostCard from './PostCard'
+import PostCard from '../PostCard/PostCard.js'
+import './PostsList.css'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import sortBy from 'sort-by'
@@ -46,6 +47,5 @@ const mapStateToProps = ({ entities, uiState }, ownProps) => {
   }
 }
 
-// const mapDispatchToProps = () => {return {}}
 
 export default withRouter(connect(mapStateToProps)(PostsList))

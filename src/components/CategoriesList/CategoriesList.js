@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import capitalize from 'capitalize'
+import './CategoriesList.css'
 
 class CategoriesList extends Component {
   render() {

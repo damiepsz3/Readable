@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import ListsContainer from '../containers/ListsContainer'
-import PostContainer from '../containers/PostContainer'
+import ListsContainer from '../ListsContainer/ListsContainer'
+import PostContainer from '../PostContainer/PostContainer'
 import { Route } from 'react-router-dom'
+import './MainContainer.css'
 
 class MainContainer extends Component {
 
