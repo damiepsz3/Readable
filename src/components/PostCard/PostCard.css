@@ -10,20 +10,6 @@
   flex-direction: column;
 }
 
-.post-card-info span{
-  padding: .5px 5px;
-  border: 1px solid rgba(0,0,0,.2);
-  border-radius: 5px;
-  margin: 0px 0px 10px 0px;
-  background-color: #c2e0ff;
-  font-size: .9em;
-  margin: 0 0 10px 0;
-}
-
-.post-card-info span a {
-  color: #3672af;
-}
-
 .post-card-info h3 a {
   color: #3672af;
 }

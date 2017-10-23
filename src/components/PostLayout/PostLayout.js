@@ -4,6 +4,9 @@ import { fetchPost } from '../../actions'
 import { connect } from 'react-redux'
 import Spinner from 'react-spinkit';
 import './PostLayout.css'
+import CategoryTag from '../CategoryTag/CategoryTag'
+import { MdAccountCircle } from 'react-icons/lib/md'
+
 
 class PostLayout extends Component {
   componentDidMount() {
@@ -11,16 +14,18 @@ class PostLayout extends Component {
   }
 
   render() {
-    const { title, author, body, isFetching } = this.props
+    const { title, author, body, category, isFetching } = this.props
     return (
     <div className='post-layout'>
       {isFetching ?
         <Spinner name="ball-zig-zag-deflect" color="blue"/>
       :
         <div>
+          <CategoryTag category={category}/>
           <h1>{title}</h1>
-          <span>{author}</span>
+          <em>Posted by <MdAccountCircle/> {author}.</em>
           <p>{body}</p>
+          <hr></hr>
         </div>
       }
 
@@ -37,6 +42,7 @@ const mapStateToProps = ({ entities }, ownProps) => {
     title: post.title || null,
     author: post.author || null,
     body: post.body || null,
+    category: post.category || '...',
     isFetching
   }
 }

@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { voteIssuing, deletePostCall } from '../../actions'
 import './PostCard.css'
-import capitalize from 'capitalize'
 import { MdThumbUp, MdThumbDown, MdCreate, MdDelete, MdAccountCircle, MdComment } from 'react-icons/lib/md'
+import CategoryTag from '../CategoryTag/CategoryTag'
 
 class PostCard extends Component {
 
@@ -14,7 +14,7 @@ class PostCard extends Component {
     return (
       <div className='post-card'>
         <div className='post-card-info'>
-          <span><Link to={`/${category}`}>{capitalize.words(category)}</Link></span>
+          <CategoryTag category={category}/>
           <h3><Link to={`/${category}/${id}`}>{title}</Link></h3>
           <p><MdAccountCircle/> by {author}. <MdComment/> {comments.length === 1 ? `${comments.length} comment` : `${comments.length} comments`}.</p>
           <div>
