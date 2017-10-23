@@ -1,15 +1,44 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux'
+import { voteComment } from '../../actions'
+import VoteController from '../VoteController/VoteController'
+import './CommentCard.css'
 
-export default class CommentCard extends Component {
+class CommentCard extends Component {
+  formatDate = (timestamp) => {
+    const date = new Date(timestamp)
+    return `${date.getUTCFullYear()}/${date.getUTCMonth()}/${date.getUTCDay()}`
+  }
+
+
   render() {
+    const { body, author, voteScore, timestamp, id, postComment} = this.props
     return (
-      <div>
-        {/* <h3>{comment.body}</h3>
-        <span>By {comment.author} on {this.formatDate(comment.timestamp)}</span>
-        <div>
-            {comment.voteScore}
-        </div> */}
+      <div className='comment-card'>
+        <div className='comment-info'>
+          <h3>{body}</h3>
+          <em>By {author} on {this.formatDate(timestamp)}</em>
+        </div>
+        <VoteController score={voteScore} id={id} voteFunction={postComment}/>
       </div>
   );
   }
 }
+
+const mapStateToProps = ({ entities }, ownProps) => {
+    const { body, author, voteScore, timestamp } = entities.comments.byId[ownProps.id];
+    return {
+      body,
+      author,
+      voteScore,
+      timestamp
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    postComment: (id, option) => dispatch(voteComment(id, option))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommentCard)

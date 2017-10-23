@@ -4,29 +4,25 @@ import { fetchComments } from '../../actions'
 import { connect } from 'react-redux'
 import Spinner from 'react-spinkit';
 import CommentCard from '../CommentCard/CommentCard'
+import './CommentsBox.css'
 
 
 class CommentsBox extends Component {
   componentDidMount() {
     this.props.getComments(this.props.postId)
   }
-
-  formatDate = (timestamp) => {
-    const date = new Date(timestamp)
-    return `${date.getUTCFullYear()}/${date.getUTCMonth()}/${date.getUTCDay()}`
-  }
-
+  
   render() {
     const { isFetching, comments } = this.props
     return (
-      <div>
+      <div className="comments-box">
         {isFetching ?
           <Spinner name="ball-zig-zag-deflect" color="blue"/>
         :
           <ul>
             {comments.map(comment => (
               <li key={comment.id}>
-                <CommentCard comment={comment.id} />
+                <CommentCard id={comment.id} />
               </li>
             ))}
           </ul>

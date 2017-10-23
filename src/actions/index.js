@@ -8,6 +8,7 @@ export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 export const REQUEST_COMMENT = 'REQUEST_COMMENT'
 export const RECEIVE_COMMENT = 'RECEIVE_COMMENT'
 export const POST_VOTE = 'POST_VOTE'
+export const COMMENT_VOTE = 'COMMENT_VOTE'
 export const REQUEST_POST = 'REQUEST_POST'
 export const RECEIVE_POST = 'RECEIVE_POST'
 export const SELECT_SORT = 'SELECT_SORT'
@@ -64,6 +65,14 @@ const receivePosts = (posts) => {
 const postVote = (id, option) => {
   return {
     type: POST_VOTE,
+    id,
+    option
+  }
+}
+
+const commentVote = (id, option) => {
+  return {
+    type: COMMENT_VOTE,
     id,
     option
   }
@@ -153,6 +162,11 @@ export const firstCall = () => (dispatch, getState) => {
 export const voteIssuing = (id, option) => (dispatch) => {
   return BlogAPI.postVote(id, option)
     .then(resp => dispatch(postVote(id, option)))
+}
+
+export const voteComment = (id, option) => (dispatch) => {
+  return BlogAPI.comVote(id, option)
+    .then(resp => dispatch(commentVote(id, option)))
 }
 
 const shouldFetchComment = (postId, getState) => {

@@ -30,9 +30,24 @@ const requestComments = (state, action) => {
   }
 }
 
+const commentVote = (state, action) => {
+  const { option, id } = action
+  return {
+    ...state,
+    byId: {
+      ...state.byId,
+      [id]: {
+        ...state.byId[id],
+        voteScore: option === 'upVote' ? state.byId[id].voteScore + 1 : state.byId[id].voteScore - 1
+      }
+    }
+  }
+}
+
 const commentsReducer = createReducer(initialState, {
   'REQUEST_COMMENT': requestComments,
-  'RECEIVE_COMMENT': receiveComments
+  'RECEIVE_COMMENT': receiveComments,
+  'COMMENT_VOTE': commentVote
 });
 
 export default commentsReducer

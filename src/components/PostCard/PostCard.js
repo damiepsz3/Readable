@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { voteIssuing, deletePostCall } from '../../actions'
 import './PostCard.css'
-import { MdThumbUp, MdThumbDown, MdCreate, MdDelete, MdAccountCircle, MdComment } from 'react-icons/lib/md'
+import { MdCreate, MdDelete, MdAccountCircle, MdComment } from 'react-icons/lib/md'
 import CategoryTag from '../CategoryTag/CategoryTag'
+import VoteController from '../VoteController/VoteController'
 
 class PostCard extends Component {
 
@@ -22,11 +23,7 @@ class PostCard extends Component {
             <a className="post-button" onClick={() => deletePost(id)}><MdDelete/></a>
           </div>
         </div>
-        <div className='post-card-vote'>
-          <a className="thump-up" onClick={() => postVote(id, 'upVote')}><MdThumbUp/></a>
-          <span>{voteScore}</span>
-          <a className="thump-down" onClick={() => postVote(id, 'downVote')}><MdThumbDown/></a>
-        </div>
+        <VoteController score={voteScore} voteFunction={postVote} id={id}/>
       </div>
     )
   }
