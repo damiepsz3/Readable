@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PostLayout from '../../components/PostLayout/PostLayout'
-import CommentsBox from '../../components/CommentsBox'
+import CommentsBox from '../../components/CommentsBox/CommentsBox'
 import './PostContainer.css'
 
 class PostContainer extends Component {

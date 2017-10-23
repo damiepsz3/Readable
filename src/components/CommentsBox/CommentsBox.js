@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router'
-import { fetchComments } from '../actions'
+import { fetchComments } from '../../actions'
 import { connect } from 'react-redux'
 import Spinner from 'react-spinkit';
+import CommentCard from '../CommentCard/CommentCard'
 
 
 class CommentsBox extends Component {
@@ -17,22 +18,15 @@ class CommentsBox extends Component {
 
   render() {
     const { isFetching, comments } = this.props
-    // console.log(comments)
     return (
       <div>
         {isFetching ?
-          <Spinner name="ball-zig-zag-deflect" color="green"/>
+          <Spinner name="ball-zig-zag-deflect" color="blue"/>
         :
           <ul>
             {comments.map(comment => (
               <li key={comment.id}>
-                <div>
-                  <h3>{comment.body}</h3>
-                  <span>By {comment.author} on {this.formatDate(comment.timestamp)}</span>
-                </div>
-                <div>
-                  {comment.voteScore}
-                </div>
+                <CommentCard comment={comment.id} />
               </li>
             ))}
           </ul>
@@ -46,8 +40,6 @@ class CommentsBox extends Component {
 const mapStateToProps = ({ entities }, ownProps) => {
   const { id } = ownProps.match.params
   const { isFetching, byId } = entities.comments
-
-  console.log()
   return {
     postId: id,
     comments: Object.keys(byId).map(comId => byId[comId]).filter(comment => comment.parentId === id),
