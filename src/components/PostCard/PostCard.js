@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { voteIssuing, deletePostCall } from '../../actions'
 import './PostCard.css'
-import { MdCreate, MdDelete, MdAccountCircle, MdComment } from 'react-icons/lib/md'
+import { MdAccountCircle, MdComment } from 'react-icons/lib/md'
 import CategoryTag from '../CategoryTag/CategoryTag'
 import VoteController from '../VoteController/VoteController'
+import ButtonsBox from '../ButtonsBox/ButtonsBox'
 
 class PostCard extends Component {
 
@@ -18,10 +19,7 @@ class PostCard extends Component {
           <CategoryTag category={category}/>
           <h3><Link to={`/${category}/${id}`}>{title}</Link></h3>
           <p><MdAccountCircle/> by {author}. <MdComment/> {comments.length === 1 ? `${comments.length} comment` : `${comments.length} comments`}.</p>
-          <div>
-            <a className="post-button"><MdCreate/></a>
-            <a className="post-button" onClick={() => deletePost(id)}><MdDelete/></a>
-          </div>
+          <ButtonsBox deleteFunc={deletePost} id={id}/>
         </div>
         <VoteController score={voteScore} voteFunction={postVote} id={id}/>
       </div>

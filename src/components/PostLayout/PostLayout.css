@@ -5,3 +5,16 @@
 .post-layout em {
   margin: 0 0 10px 0;
 }
+
+.post-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.post-header-tag {
+  align-self: flex-start;
+}
+
+.post-header-buttons {
+  margin-left: auto;
+}

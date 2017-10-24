@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import { voteComment } from '../../actions'
 import VoteController from '../VoteController/VoteController'
+import ButtonsBox from '../ButtonsBox/ButtonsBox'
 import './CommentCard.css'
 
 class CommentCard extends Component {
@@ -17,7 +18,10 @@ class CommentCard extends Component {
       <div className='comment-card'>
         <div className='comment-info'>
           <h3>{body}</h3>
-          <em>By {author} on {this.formatDate(timestamp)}</em>
+          <div className="comment-info-author">
+            <em>By {author} on {this.formatDate(timestamp)}</em>
+          </div>
+          <ButtonsBox/>
         </div>
         <VoteController score={voteScore} id={id} voteFunction={postComment}/>
       </div>

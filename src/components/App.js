@@ -10,7 +10,9 @@ class App extends Component {
         <div className="blog-title">
           <h1>Readable Blog</h1>
           {route.location.pathname !== '/' &&
-            <a className="go-back" onClick={route.history.goBack}>Go back</a>
+            <div className="go-back">
+              <a onClick={route.history.goBack}>Go back</a>
+            </div>
           }
         </div>
         <MainContainer/>
