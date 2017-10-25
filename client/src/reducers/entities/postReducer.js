@@ -15,7 +15,10 @@ const receivePosts = (state, action) => {
   return {
     ...state,
     isFetching: action.fetching,
-    byId: normalizedPosts.entities.post,
+    byId: {
+      ...state.byId,
+      ...normalizedPosts.entities.post
+    },
     allIds: normalizedPosts.result
   }
 }
@@ -28,13 +31,18 @@ const requestPosts = (state, action) => {
 }
 
 const receivePost = (state, action) => {
-  const normalizedPost = normalize(action.post, postSchema)
+  const { post } = action
+  const normalizedPost = normalize(post, postSchema)
+
   return {
     ...state,
     isFetching: action.fetching,
     byId: {
       ...state.byId,
-      ...normalizedPost.entities.post
+      [post.id]: {
+        ...state.byId[post.id],
+        ...normalizedPost.entities.post[post.id]
+      }
     },
     allIds: state.allIds.concat(normalizedPost.result)
   }
@@ -89,6 +97,21 @@ const deletePost = (state, action) => {
   }
 }
 
+const deleteComment = (state, action) => {
+  const { id, parentId } = action
+  console.log(id, parentId);
+  return {
+    ...state,
+    byId: {
+      ...state.byId,
+      [parentId]: {
+        ...state.byId[parentId],
+        comments: state.byId[parentId].comments.pop(state.byId[parentId].comments.indexOf(id))
+      }
+    }
+  }
+}
+
 
 const postReducer = createReducer(initialState, {
   'REQUEST_POSTS': requestPosts,
@@ -97,7 +120,8 @@ const postReducer = createReducer(initialState, {
   'POST_VOTE': updateVote,
   'REQUEST_POST': requestPost,
   'RECEIVE_POST': receivePost,
-  'DELETE_POST': deletePost
+  'DELETE_POST': deletePost,
+  'DELETE_COMMENT': deleteComment
 });
 
 export default postReducer

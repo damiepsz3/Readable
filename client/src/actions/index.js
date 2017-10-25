@@ -13,6 +13,7 @@ export const REQUEST_POST = 'REQUEST_POST'
 export const RECEIVE_POST = 'RECEIVE_POST'
 export const SELECT_SORT = 'SELECT_SORT'
 export const DELETE_POST = 'DELETE_POST'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const ERROR_FOUND = 'ERROR_FOUND'
 
 
@@ -109,6 +110,14 @@ const deletePost = (id) => {
   }
 }
 
+const deleteComment = (id, parentId) => {
+  return {
+    type: DELETE_COMMENT,
+    id,
+    parentId
+  }
+}
+
 const errorFound = (message) => {
   return {
     type: ERROR_FOUND,
@@ -119,6 +128,11 @@ const errorFound = (message) => {
 export const deletePostCall = (id) => dispatch => {
   return BlogAPI.postDelete(id)
     .then(resp => dispatch(deletePost(id)))
+}
+
+export const deleteCommentCall = (id, parentId) => dispatch => {
+  return BlogAPI.comDelete(id)
+    .then(resp => dispatch(deleteComment(id, parentId)))
 }
 
 const fetchCategories = () => {

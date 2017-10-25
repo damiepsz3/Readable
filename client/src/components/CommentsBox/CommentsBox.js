@@ -11,7 +11,7 @@ class CommentsBox extends Component {
   componentDidMount() {
     this.props.getComments(this.props.postId)
   }
-  
+
   render() {
     const { isFetching, comments } = this.props
     return (
@@ -38,7 +38,7 @@ const mapStateToProps = ({ entities }, ownProps) => {
   const { isFetching, byId } = entities.comments
   return {
     postId: id,
-    comments: Object.keys(byId).map(comId => byId[comId]).filter(comment => comment.parentId === id),
+    comments: Object.keys(byId).map(comId => byId[comId]).filter(comment => comment.parentId === id && comment.deleted === false),
     isFetching
   }
 }

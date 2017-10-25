@@ -8,14 +8,12 @@ import sortBy from 'sort-by'
 
 class PostsList extends Component {
   render() {
-    const {category, posts, selected} = this.props
-    const postCategory = category !== '/' ? posts.filter(post => post.category === category) : posts
-    const postPrint = postCategory.filter(post => !post.deleted).sort(sortBy(selected.value))
+    const { posts, selected} = this.props
     return (
       <div className="blog-posts">
         <ul>
-          {postPrint.length ?
-            postPrint.map(post => (
+          {posts.length ?
+            posts.sort(sortBy(selected.value)).map(post => (
               <li key={post.id}>
                 <PostCard idSelected={post.id} />
               </li>
@@ -31,19 +29,20 @@ class PostsList extends Component {
 const mapStateToProps = ({ entities, uiState }, ownProps) => {
   const { posts } = entities
   const { sortBy } = uiState
-  const { category } = ownProps.match.params
+  const  category  = ownProps.match.params.category || '/'
   return {
     posts: Object.keys(posts.byId).reduce((acum, id) => {
-      acum.push({
-        id: posts.byId[id].id,
-        category: posts.byId[id].category,
-        voteScore: posts.byId[id].voteScore,
-        time: posts.byId[id].timestamp,
-        deleted: posts.byId[id].deleted
-      })
+      let categoryBool = category === '/' ? true : posts.byId[id].category === category
+      if(!posts.byId[id].deleted && categoryBool) {
+        acum.push({
+          id: posts.byId[id].id,
+          category: posts.byId[id].category,
+          voteScore: posts.byId[id].voteScore,
+          time: posts.byId[id].timestamp
+        })
+      }
       return acum
     }, []),
-    category: category || '/',
     selected: sortBy.selected
   }
 }

@@ -44,10 +44,25 @@ const commentVote = (state, action) => {
   }
 }
 
+const deleteComment = (state, action) => {
+  const { id } = action
+  return {
+    ...state,
+    byId: {
+      ...state.byId,
+      [id]: {
+        ...state.byId[id],
+        deleted: true
+      }
+    }
+  }
+}
+
 const commentsReducer = createReducer(initialState, {
   'REQUEST_COMMENT': requestComments,
   'RECEIVE_COMMENT': receiveComments,
-  'COMMENT_VOTE': commentVote
+  'COMMENT_VOTE': commentVote,
+  'DELETE_COMMENT': deleteComment
 });
 
 export default commentsReducer
