@@ -1,5 +1,4 @@
 import * as BlogAPI from '../utils/BlogAPI.js'
-import { createShouldFetch } from './helper.js'
 
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
@@ -182,11 +181,13 @@ export const fetchComments = (postId) => (dispatch, getState) => {
 }
 
 export const firstCall = () => (dispatch, getState) => {
-  if(createShouldFetch('entities','posts')(getState())) {
+  const postsLength = Object.keys(getState().entities.posts.byId).length
+  const categoryLength = Object.keys(getState().entities.categories.byId).length
+  if(postsLength < 2) {
     dispatch(fetchPostComment())
   }
-  if(createShouldFetch('entities','categories')(getState())) {
-     dispatch(fetchCategories())
+  if(categoryLength < 2) {
+    dispatch(fetchCategories())
   }
 }
 

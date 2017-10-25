@@ -106,7 +106,7 @@ const deleteComment = (state, action) => {
       ...state.byId,
       [parentId]: {
         ...state.byId[parentId],
-        comments: state.byId[parentId].comments.pop(state.byId[parentId].comments.indexOf(id))
+        comments: state.byId[parentId].comments.filter(comId => comId !== id)
       }
     }
   }
