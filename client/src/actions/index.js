@@ -13,6 +13,7 @@ export const REQUEST_POST = 'REQUEST_POST'
 export const RECEIVE_POST = 'RECEIVE_POST'
 export const SELECT_SORT = 'SELECT_SORT'
 export const DELETE_POST = 'DELETE_POST'
+export const ERROR_FOUND = 'ERROR_FOUND'
 
 
 const requestComments = () => {
@@ -89,6 +90,7 @@ const receivePost = (post) => {
   return {
     type: RECEIVE_POST,
     fetching: false,
+    found: true,
     post
   }
 }
@@ -104,6 +106,13 @@ const deletePost = (id) => {
   return {
     type: DELETE_POST,
     id
+  }
+}
+
+const errorFound = (message) => {
+  return {
+    type: ERROR_FOUND,
+    message
   }
 }
 
@@ -138,7 +147,15 @@ export const fetchPost = (id) => (dispatch, getState) => {
   if(!getState().entities.posts.byId.hasOwnProperty(id)) {
     dispatch(requestPost())
     return BlogAPI.postDetail(id)
+      .then(function(response) {
+          if (response.error) {
+            throw Error(response.statusText);
+          }
+          return response;
+        }
+      )
       .then(resp => dispatch(receivePost(resp)))
+      .catch(message => dispatch(errorFound(message)))
   }
 }
 

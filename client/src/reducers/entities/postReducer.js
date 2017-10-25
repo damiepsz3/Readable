@@ -89,6 +89,7 @@ const deletePost = (state, action) => {
   }
 }
 
+
 const postReducer = createReducer(initialState, {
   'REQUEST_POSTS': requestPosts,
   'RECEIVE_POSTS': receivePosts,

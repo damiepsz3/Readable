@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router'
-import { fetchPost, deletePostCall, voteIssuing } from '../../actions'
+import { deletePostCall, voteIssuing } from '../../actions'
 import { connect } from 'react-redux'
 import Spinner from 'react-spinkit';
 import './PostLayout.css'
@@ -11,9 +11,7 @@ import { MdAccountCircle } from 'react-icons/lib/md'
 
 
 class PostLayout extends Component {
-  componentDidMount() {
-    this.props.getPost(this.props.id)
-  }
+
 
   render() {
     const { id, title, author, body, category, voteScore, isFetching, deletePost, postVote } = this.props
@@ -59,7 +57,6 @@ const mapStateToProps = ({ entities }, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPost: (id) => dispatch(fetchPost(id)),
     deletePost: (id) => dispatch(deletePostCall(id)),
     postVote: (id, option) => dispatch(voteIssuing(id, option))
   }

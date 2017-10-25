@@ -17,6 +17,7 @@ const selectSort = (state, action) => {
   }
 }
 
+
 const sortReducer = createReducer(initialState, {
     'SELECT_SORT': selectSort
 })

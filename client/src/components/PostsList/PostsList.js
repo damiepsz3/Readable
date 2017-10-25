@@ -9,18 +9,19 @@ import sortBy from 'sort-by'
 class PostsList extends Component {
   render() {
     const {category, posts, selected} = this.props
-    const postPrint = category !== '/' ? posts.filter(post => post.category === category) : posts
+    const postCategory = category !== '/' ? posts.filter(post => post.category === category) : posts
+    const postPrint = postCategory.filter(post => !post.deleted).sort(sortBy(selected.value))
     return (
       <div className="blog-posts">
         <ul>
           {postPrint.length ?
-            postPrint.filter(post => !post.deleted).sort(sortBy(selected.value)).map(post => (
+            postPrint.map(post => (
               <li key={post.id}>
                 <PostCard idSelected={post.id} />
               </li>
             ))
             :
-            <h3>There is not post under {category} </h3>
+            <h3>There is no post here! </h3>
         }
         </ul>
       </div>
