@@ -152,7 +152,8 @@ const fetchPostComment = () => {
         return BlogAPI.postComments(post.id)
           .then(resp => dispatch(receiveComments(resp, post.id)))
         })
-      )}
+      )
+    }
 }
 
 
