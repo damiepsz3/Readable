@@ -24,17 +24,16 @@ export const getPosts = () =>
   fetch(`${api}/posts`, { headers })
     .then(res => res.json())
 
-export const post = (title, body, author, category) => {
-  const id = 1
+export const post = (post) =>
   fetch(`${api}/posts`, {
     method: 'POST',
     headers:{
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ id, title, body, author, category })
+    body: JSON.stringify(post)
   }).then(res => res.json())
-}
+
 
 export const postDetail = (id) =>
   fetch(`${api}/posts/${id}`, { headers })

@@ -112,6 +112,19 @@ const deleteComment = (state, action) => {
   }
 }
 
+const addNew = (state, action) => {
+  const {id} = action.post
+  return {
+    ...state,
+    byId:{
+      ...state.byId,
+      [id]: action.post
+    },
+    allIds: state.allIds.concat(id)
+  }
+}
+
+
 
 const postReducer = createReducer(initialState, {
   'REQUEST_POSTS': requestPosts,
@@ -121,7 +134,9 @@ const postReducer = createReducer(initialState, {
   'REQUEST_POST': requestPost,
   'RECEIVE_POST': receivePost,
   'DELETE_POST': deletePost,
-  'DELETE_COMMENT': deleteComment
+  'DELETE_COMMENT': deleteComment,
+  'NEW_POST': addNew,
+  'POST_SUCCESS': addNew
 });
 
 export default postReducer

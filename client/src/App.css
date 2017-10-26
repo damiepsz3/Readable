@@ -82,28 +82,3 @@ a {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   font-size: 0;
 }
-
-.new-post {
-  display: flex;
-  flex-direction: column;
-}
-
-.new-post h1 {
-  margin: 0 0 10px 0;
-}
-
-.new-post input {
-  margin: 0 0 10px 0;
-  border-radius: 5px;
-  border: 1px solid;
-  box-shadow: 1px 1px 0.5px 0.8px rgba(0, 0, 0, .2);
-  padding: 10px 10px
-}
-
-.new-post textarea {
-  margin: 0 0 10px 0;
-  border-radius: 5px;
-  border: 1px solid;
-  box-shadow: 1px 1px 0.5px 0.8px rgba(0, 0, 0, .2);
-  padding: 10px 10px
-}

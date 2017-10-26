@@ -14,6 +14,9 @@ export const SELECT_SORT = 'SELECT_SORT'
 export const DELETE_POST = 'DELETE_POST'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const ERROR_FOUND = 'ERROR_FOUND'
+export const MODAL_SWITCH = 'MODAL_SWITCH'
+export const NEW_POST = 'NEW_POST'
+export const POST_SUCCESS = 'POST_SUCCESS'
 
 
 const requestComments = () => {
@@ -95,12 +98,6 @@ const receivePost = (post) => {
   }
 }
 
-export const selectSort = (value) => {
-  return {
-    type: SELECT_SORT,
-    value
-  }
-}
 
 const deletePost = (id) => {
   return {
@@ -122,6 +119,42 @@ const errorFound = (message) => {
     type: ERROR_FOUND,
     message
   }
+}
+
+const newPost = (post) => {
+  return {
+    type: NEW_POST,
+    post
+  }
+}
+
+const postedSuccess = (post) => {
+  return {
+    type: POST_SUCCESS,
+    post
+  }
+}
+
+export const selectSort = (value) => {
+  return {
+    type: SELECT_SORT,
+    value
+  }
+}
+
+export const modalSwitch = (open) => {
+  return{
+    type: MODAL_SWITCH,
+    open
+  }
+}
+
+
+//with thunks
+export const createPost = post => dispatch => {
+  dispatch(newPost(post))
+  return BlogAPI.post(post)
+    .then(resp => dispatch(postedSuccess(resp)))
 }
 
 export const deletePostCall = (id) => dispatch => {

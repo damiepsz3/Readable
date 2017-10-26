@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
 import '../App.css'
 import MainContainer from '../containers/MainContainer/MainContainer'
+import NewPost from './NewPost/NewPost'
 import Modal from 'react-modal'
+import { modalSwitch } from '../actions'
 class App extends Component {
-  state = {
-    openModal: false
-  }
-
   render() {
-    const route = this.props
-    const { openModal } = this.state
+    const { location, isOpen, history, switchModal } = this.props
     const customStyles = {
       content : {
         top                   : '50%',
@@ -27,31 +25,38 @@ class App extends Component {
       <div className="blog">
         <div className="blog-title">
           <h1>Readable Blog</h1>
-          {route.location.pathname !== '/' &&
+          {location.pathname !== '/' &&
             <div className="go-back">
-              <a onClick={route.history.goBack}>Go back</a>
+              <a onClick={history.goBack}>Go back</a>
             </div>
           }
           <div className="add-post">
-            <a onClick={()=>(this.setState({openModal: true}))}>New post</a>
+            <a onClick={()=> switchModal(true)}>New post</a>
           </div>
         </div>
         <MainContainer/>
         <Modal
-          isOpen={openModal}
+          isOpen={isOpen}
           style={customStyles}
         >
-          <div className="new-post">
-            <h1>Create a new post</h1>
-            <input placeholder='Title'></input>
-            <textarea placeholder='Body'></textarea>
-            <input placeholder='Written by'></input>
-
-          </div>
+          <NewPost/>
         </Modal>
       </div>
     )
   }
 }
 
-export default withRouter(App)
+const mapStateProps = ({ uiState }) => {
+  const { isOpen } = uiState.modal
+  return {
+    isOpen
+  }
+}
+
+const mapDispatchProps = dispatch => {
+  return {
+    switchModal: (open) => dispatch(modalSwitch(open))
+  }
+}
+
+export default withRouter(connect(mapStateProps, mapDispatchProps)(App))
