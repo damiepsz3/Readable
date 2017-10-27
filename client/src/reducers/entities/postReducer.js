@@ -124,7 +124,20 @@ const addNew = (state, action) => {
   }
 }
 
-
+const editPost = (state, action) => {
+  const { id, title, body } = action.postChanges
+  return {
+    ...state,
+    byId: {
+      ...state.byId,
+      [id]: {
+        ...state.byId[id],
+        title,
+        body
+      }
+    }
+  }
+}
 
 const postReducer = createReducer(initialState, {
   'REQUEST_POSTS': requestPosts,
@@ -136,7 +149,8 @@ const postReducer = createReducer(initialState, {
   'DELETE_POST': deletePost,
   'DELETE_COMMENT': deleteComment,
   'NEW_POST': addNew,
-  'POST_SUCCESS': addNew
+  'POST_SUCCESS': addNew,
+  'EDIT_POST': editPost
 });
 
 export default postReducer

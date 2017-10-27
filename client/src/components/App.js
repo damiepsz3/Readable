@@ -3,9 +3,10 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import '../App.css'
 import MainContainer from '../containers/MainContainer/MainContainer'
-import NewPost from './NewPost/NewPost'
+import ModalContainer from '../containers/ModalContainer/ModalContainer'
 import Modal from 'react-modal'
 import { modalSwitch } from '../actions'
+
 class App extends Component {
   render() {
     const { location, isOpen, history, switchModal } = this.props
@@ -35,11 +36,11 @@ class App extends Component {
           </div>
         </div>
         <MainContainer/>
+        <ModalContainer />
         <Modal
           isOpen={isOpen}
           style={customStyles}
         >
-          <NewPost/>
         </Modal>
       </div>
     )

@@ -131,7 +131,8 @@ const newPost = (post) => {
 const postedSuccess = (post) => {
   return {
     type: POST_SUCCESS,
-    post
+    post,
+    open: false
   }
 }
 
@@ -143,18 +144,33 @@ export const selectSort = (value) => {
 }
 
 export const modalSwitch = (open) => {
-  return{
+  return {
     type: MODAL_SWITCH,
     open
   }
 }
 
-
 //with thunks
-export const createPost = post => dispatch => {
-  dispatch(newPost(post))
-  return BlogAPI.post(post)
-    .then(resp => dispatch(postedSuccess(resp)))
+export const createPost = post => {
+  return dispatch => {
+    dispatch(newPost(post))
+    return BlogAPI.post(post)
+      .then(resp => dispatch(postedSuccess(resp)))
+    }
+}
+
+export const editPost = postChanges => {
+  return dispatch => {
+      dispatch({
+        type: 'EDIT_POST',
+        postChanges
+      })
+      return BlogAPI.postEdit(postChanges)
+      .then(resp => dispatch({
+        type: 'EDIT_POST_SUCCESS',
+        resp
+      }))
+  }
 }
 
 export const deletePostCall = (id) => dispatch => {

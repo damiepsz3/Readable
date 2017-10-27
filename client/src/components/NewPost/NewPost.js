@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { modalSwitch, createPost } from '../../actions'
 import capitalize from 'capitalize'
