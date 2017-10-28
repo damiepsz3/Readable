@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "capitalize": "^1.0.0",
-    "normalizr": "^3.2.4",
     "prop-types": "^15.5.10",
     "react": "^15.6.2",
     "react-dom": "^15.6.1",

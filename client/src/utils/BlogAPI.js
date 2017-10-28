@@ -13,7 +13,12 @@ const headers = {
 export const getCategories = () =>
   fetch(`${api}/categories`, { headers })
     .then(res => res.json())
-    .then(res => res.categories)
+    .then(res => res.categories.reduce((acum, category) => {
+      return acum = {
+        ...acum,
+        [category.path]: category
+      }
+    },{}))
 
 export const getCatPost = (category) =>
   fetch(`${api}/${category}/posts`, { headers })
@@ -23,6 +28,12 @@ export const getCatPost = (category) =>
 export const getPosts = () =>
   fetch(`${api}/posts`, { headers })
     .then(res => res.json())
+    .then(res => res.reduce((acum, post) => {
+      return acum = {
+        ...acum,
+        [post.id]: post
+      }
+    },{}))
 
 export const post = (post) =>
   fetch(`${api}/posts`, {
@@ -68,6 +79,12 @@ export const postDelete = (id) =>
 export const postComments = (id) =>
   fetch(`${api}/posts/${id}/comments`, { headers })
   .then(res => res.json())
+  .then(res => res.reduce((acum,com) => {
+    return acum = {
+      ...acum,
+      [com.id]: com
+    }
+  },{}))
 
 //comments
 export const comment = (body, author, parentId) =>
