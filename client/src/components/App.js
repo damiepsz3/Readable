@@ -1,27 +1,19 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
-import { connect } from 'react-redux'
 import '../App.css'
 import MainContainer from '../containers/MainContainer/MainContainer'
 import ModalContainer from '../containers/ModalContainer/ModalContainer'
-import Modal from 'react-modal'
-import { modalSwitch } from '../actions'
+import { connect } from 'react-redux'
+import { modalSwitch, firstCall } from '../actions'
+
 
 class App extends Component {
+  componentDidMount() {
+    this.props.fetchAll()
+  }
+
   render() {
-    const { location, isOpen, history, switchModal } = this.props
-    const customStyles = {
-      content : {
-        top                   : '50%',
-        left                  : '50%',
-        right                 : 'auto',
-        bottom                : 'auto',
-        marginRight           : '-50%',
-        transform             : 'translate(-50%, -50%)',
-        borderRadius          : '5px',
-        boxShadow             : '1px 1px 0.5px 0.8px rgba(0, 0, 0, .2)'
-      }
-    };
+    const { location, history, switchModal } = this.props
     return (
       <div className="blog">
         <div className="blog-title">
@@ -32,32 +24,21 @@ class App extends Component {
             </div>
           }
           <div className="add-post">
-            <a onClick={()=> switchModal(true)}>New post</a>
+            <a onClick={()=> switchModal(true)} >New post</a>
           </div>
         </div>
         <MainContainer/>
         <ModalContainer />
-        <Modal
-          isOpen={isOpen}
-          style={customStyles}
-        >
-        </Modal>
       </div>
     )
   }
 }
 
-const mapStateProps = ({ uiState }) => {
-  const { isOpen } = uiState.modal
+const mapDispatchToProps = dispatch => {
   return {
-    isOpen
+    switchModal: (open) => dispatch(modalSwitch(open)),
+    fetchAll: () => dispatch(firstCall())
   }
 }
 
-const mapDispatchProps = dispatch => {
-  return {
-    switchModal: (open) => dispatch(modalSwitch(open))
-  }
-}
-
-export default withRouter(connect(mapStateProps, mapDispatchProps)(App))
+export default withRouter(connect(null, mapDispatchToProps)(App))

@@ -8,7 +8,7 @@ import './CommentCard.css'
 class CommentCard extends Component {
   formatDate = (timestamp) => {
     const date = new Date(timestamp)
-    return `${date.getUTCFullYear()}/${date.getUTCMonth()}/${date.getUTCDay()}`
+    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}.`
   }
 
 

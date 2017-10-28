@@ -1,19 +1,16 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router'
-import { fetchComments } from '../../actions'
 import { connect } from 'react-redux'
 import Spinner from 'react-spinkit';
 import CommentCard from '../CommentCard/CommentCard'
+import NewComment from '../NewComment/NewComment'
 import './CommentsBox.css'
 
 
 class CommentsBox extends Component {
-  componentDidMount() {
-    this.props.getComments(this.props.postId)
-  }
 
   render() {
-    const { isFetching, comments } = this.props
+    const { isFetching, comments, postId } = this.props
     return (
       <div className="comments-box">
         {isFetching ?
@@ -25,6 +22,7 @@ class CommentsBox extends Component {
                 <CommentCard id={comment.id} />
               </li>
             ))}
+            <NewComment parentId={postId}/>
           </ul>
         }
 
@@ -43,10 +41,5 @@ const mapStateToProps = ({ entities }, ownProps) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getComments: (postId) => dispatch(fetchComments(postId))
-  }
-}
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CommentsBox))
+export default withRouter(connect(mapStateToProps)(CommentsBox))

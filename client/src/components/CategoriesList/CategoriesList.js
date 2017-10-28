@@ -10,8 +10,9 @@ class CategoriesList extends Component {
     return (
       <div className="blog-categories">
         <nav>
+          <Link to="/"><b>Show All</b></Link>
           {categories.map((cat) => (
-            <Link key={cat.path} to={`/${cat.path}`}>
+            <Link className="categories" key={cat.path} to={`/${cat.path}`}>
               {capitalize.words(cat.name)}
             </Link>
           ))}

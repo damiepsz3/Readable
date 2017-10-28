@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { fetchPost } from '../../actions'
 import PostLayout from '../../components/PostLayout/PostLayout'
 import CommentsBox from '../../components/CommentsBox/CommentsBox'
 import './PostContainer.css'
 
 class PostContainer extends Component {
-  componentDidMount() {
-    this.props.getPost(this.props.id)
-  }
   render() {
     const { deleted } = this.props
     return (
@@ -37,11 +33,5 @@ const mapStateToProps = ({ entities, uiState }, ownProps) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getPost: (id) => dispatch(fetchPost(id))
-  }
-}
 
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostContainer))
+export default withRouter(connect(mapStateToProps)(PostContainer))
