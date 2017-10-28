@@ -1,51 +1,31 @@
 import * as BlogAPI from '../utils/BlogAPI.js'
 
-export const REQUEST_POSTS = 'REQUEST_POSTS'
-export const RECEIVE_POSTS = 'RECEIVE_POSTS'
-export const REQUEST_CATEGORIES = 'REQUEST_CATEGORIES'
-export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
-export const REQUEST_COMMENT = 'REQUEST_COMMENT'
-export const RECEIVE_COMMENT = 'RECEIVE_COMMENT'
-export const POST_VOTE = 'POST_VOTE'
-export const COMMENT_VOTE = 'COMMENT_VOTE'
-export const REQUEST_POST = 'REQUEST_POST'
-export const RECEIVE_POST = 'RECEIVE_POST'
-export const SELECT_SORT = 'SELECT_SORT'
-export const DELETE_POST = 'DELETE_POST'
-export const DELETE_COMMENT = 'DELETE_COMMENT'
-export const ERROR_FOUND = 'ERROR_FOUND'
-export const MODAL_SWITCH = 'MODAL_SWITCH'
-export const NEW_POST = 'NEW_POST'
-export const POST_SUCCESS = 'POST_SUCCESS'
-
-
 const requestComments = () => {
   return {
-    type: REQUEST_COMMENT,
+    type: 'REQUEST_COMMENT',
     fetching: true
   }
 }
 
 const receiveComments = (comments, parentId) => {
   return {
-    type: RECEIVE_COMMENT,
+    type: 'RECEIVE_COMMENT',
     fetching: false,
     comments,
     parentId
   }
 }
 
-
 const requestCategories = () => {
   return {
-    type: REQUEST_CATEGORIES,
+    type: 'REQUEST_CATEGORIES',
     fetching: true
   }
 }
 
 const receiveCategories = (categories) => {
   return {
-    type: RECEIVE_CATEGORIES,
+    type: 'RECEIVE_CATEGORIES',
     fetching: false,
     categories
   }
@@ -53,14 +33,14 @@ const receiveCategories = (categories) => {
 
 const requestPosts = () => {
   return {
-    type: REQUEST_POSTS,
+    type: 'REQUEST_POSTS',
     fetching: true
   }
 }
 
 const receivePosts = (posts) => {
   return {
-    type: RECEIVE_POSTS,
+    type: 'RECEIVE_POSTS',
     fetching: false,
     posts
   }
@@ -68,7 +48,7 @@ const receivePosts = (posts) => {
 
 const postVote = (id, option) => {
   return {
-    type: POST_VOTE,
+    type: 'POST_VOTE',
     id,
     option
   }
@@ -76,39 +56,22 @@ const postVote = (id, option) => {
 
 const commentVote = (id, option) => {
   return {
-    type: COMMENT_VOTE,
+    type: 'COMMENT_VOTE',
     id,
     option
   }
 }
 
-const requestPost = () => {
-  return {
-    type: REQUEST_POST,
-    fetching: true
-  }
-}
-
-const receivePost = (post) => {
-  return {
-    type: RECEIVE_POST,
-    fetching: false,
-    found: true,
-    post
-  }
-}
-
-
 const deletePost = (id) => {
   return {
-    type: DELETE_POST,
+    type: 'DELETE_POST',
     id
   }
 }
 
 const deleteComment = (id, parentId) => {
   return {
-    type: DELETE_COMMENT,
+    type: 'DELETE_COMMENT',
     id,
     parentId
   }
@@ -116,36 +79,35 @@ const deleteComment = (id, parentId) => {
 
 const errorFound = (message) => {
   return {
-    type: ERROR_FOUND,
+    type: 'ERROR_FOUND',
     message
   }
 }
 
 const newPost = (post) => {
   return {
-    type: NEW_POST,
+    type: 'NEW_POST',
     post
   }
 }
 
 const postedSuccess = (post) => {
   return {
-    type: POST_SUCCESS,
-    post,
-    open: false
+    type: 'POST_SUCCESS',
+    post
   }
 }
 
 export const selectSort = (value) => {
   return {
-    type: SELECT_SORT,
+    type: 'SELECT_SORT',
     value
   }
 }
 
 export const modalSwitch = (open) => {
-  return {
-    type: MODAL_SWITCH,
+  return{
+    type: 'MODAL_SWITCH',
     open
   }
 }
@@ -195,20 +157,25 @@ const fetchPostComment = () => {
   return (dispatch, getState) => {
     dispatch(requestPosts())
     return BlogAPI.getPosts()
-      .then(resp => dispatch(receivePosts(resp)))
-      .then(action => action.posts.map(post => {
-        dispatch(requestComments())
-        return BlogAPI.postComments(post.id)
-          .then(resp => dispatch(receiveComments(resp, post.id)))
-        })
+      .then(posts =>
+        dispatch(receivePosts(posts))
       )
+      .then(action => {
+        dispatch(requestComments())
+        Object.keys(action.posts).map(parentId =>
+          BlogAPI.postComments(parentId)
+            .then(comments =>
+              dispatch(receiveComments(comments, parentId))
+            )
+          )
+      })
     }
 }
 
 
 export const fetchPost = (id) => (dispatch, getState) => {
   if(!getState().entities.posts.byId.hasOwnProperty(id)) {
-    dispatch(requestPost())
+    dispatch(requestPosts())
     return BlogAPI.postDetail(id)
       .then(function(response) {
           if (response.error) {
@@ -217,7 +184,7 @@ export const fetchPost = (id) => (dispatch, getState) => {
           return response;
         }
       )
-      .then(resp => dispatch(receivePost(resp)))
+      .then(resp => dispatch(receivePosts(resp)))
       .catch(message => dispatch(errorFound(message)))
   }
 }

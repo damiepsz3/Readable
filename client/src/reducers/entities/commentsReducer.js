@@ -1,32 +1,19 @@
 import { createReducer } from '../helper.js'
-import { normalize, schema } from 'normalizr'
-
-const commentSchema = new schema.Entity('comment')
-const commentListSchema = new schema.Array(commentSchema)
 
 const initialState = {
-  isFetching: false,
   byId: {},
   allIds: []
 }
 
-const receiveComments = (state, action) => {
-  const normalizedComment = normalize(action.comments, commentListSchema)
+const receiveComment = (state, action) => {
+  const { comments } = action
   return {
     ...state,
-    isFetching: action.fetching,
-    byId: {
+    byId:{
       ...state.byId,
-      ...normalizedComment.entities.comment
+      ...comments
     },
-    allIds: normalizedComment.result
-  }
-}
-
-const requestComments = (state, action) => {
-  return {
-    ...state,
-    isFetching: action.fetching
+    allIds: state.allIds.concat(Object.keys(comments))
   }
 }
 
@@ -59,8 +46,7 @@ const deleteComment = (state, action) => {
 }
 
 const commentsReducer = createReducer(initialState, {
-  'REQUEST_COMMENT': requestComments,
-  'RECEIVE_COMMENT': receiveComments,
+  'RECEIVE_COMMENT': receiveComment,
   'COMMENT_VOTE': commentVote,
   'DELETE_COMMENT': deleteComment
 });

@@ -1,71 +1,47 @@
 import { createReducer } from '../helper.js'
-import { normalize, schema } from 'normalizr'
-
-const postSchema = new schema.Entity('post')
-const postListSchema = new schema.Array(postSchema)
 
 const initialState = {
-  isFetching: false,
   byId: {},
   allIds: []
 }
 
 const receivePosts = (state, action) => {
-  const normalizedPosts = normalize(action.posts, postListSchema)
+  const { posts } = action
   return {
     ...state,
-    isFetching: action.fetching,
     byId: {
       ...state.byId,
-      ...normalizedPosts.entities.post
+      ...posts
     },
-    allIds: normalizedPosts.result
-  }
-}
-
-const requestPosts = (state, action) => {
-  return {
-    ...state,
-    isFetching: action.fetching
+    allIds: state.allIds.concat(Object.keys(posts))
   }
 }
 
 const receivePost = (state, action) => {
   const { post } = action
-  const normalizedPost = normalize(post, postSchema)
-
   return {
     ...state,
-    isFetching: action.fetching,
     byId: {
       ...state.byId,
       [post.id]: {
         ...state.byId[post.id],
-        ...normalizedPost.entities.post[post.id]
       }
     },
-    allIds: state.allIds.concat(normalizedPost.result)
+    allIds: state.allIds.concat(post.id)
   }
 }
 
-const requestPost = (state, action) => {
-  return {
-    ...state,
-    isFetching: action.fetching
-  }
-}
-
-const receiveComments = (state, action) => {
-  const { parentId, comments } = action
+const receiveComment = (state, action) => {
+  const { comments, parentId } = action
   return {
     ...state,
     byId: {
      ...state.byId,
      [parentId]: {
        ...state.byId[parentId],
-       'comments': comments.map(com => com.id)
-     },
-   }
+       'comments': Object.keys(comments)
+     }
+    }
   }
 }
 
@@ -99,7 +75,6 @@ const deletePost = (state, action) => {
 
 const deleteComment = (state, action) => {
   const { id, parentId } = action
-  console.log(id, parentId);
   return {
     ...state,
     byId: {
@@ -140,16 +115,13 @@ const editPost = (state, action) => {
 }
 
 const postReducer = createReducer(initialState, {
-  'REQUEST_POSTS': requestPosts,
   'RECEIVE_POSTS': receivePosts,
-  'RECEIVE_COMMENT': receiveComments,
+  'RECEIVE_COMMENT': receiveComment,
   'POST_VOTE': updateVote,
-  'REQUEST_POST': requestPost,
   'RECEIVE_POST': receivePost,
   'DELETE_POST': deletePost,
   'DELETE_COMMENT': deleteComment,
   'NEW_POST': addNew,
-  'POST_SUCCESS': addNew,
   'EDIT_POST': editPost
 });
 
