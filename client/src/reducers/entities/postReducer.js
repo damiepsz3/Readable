@@ -87,8 +87,8 @@ const deleteComment = (state, action) => {
   }
 }
 
-const addNew = (state, action) => {
-  const {id} = action.post
+const addPost = (state, action) => {
+  const { id } = action.post
   return {
     ...state,
     byId:{
@@ -96,6 +96,20 @@ const addNew = (state, action) => {
       [id]: action.post
     },
     allIds: state.allIds.concat(id)
+  }
+}
+
+const addComment = (state, action) => {
+  const { parentId } = action.comment
+  return {
+    ...state,
+    byId:{
+      ...state.byId,
+      [parentId]: {
+        ...state.byId[parentId],
+        'comments': state.byId[parentId].comments.concat(action.comment.id)
+      }
+    }
   }
 }
 
@@ -121,8 +135,10 @@ const postReducer = createReducer(initialState, {
   'RECEIVE_POST': receivePost,
   'DELETE_POST': deletePost,
   'DELETE_COMMENT': deleteComment,
-  'NEW_POST': addNew,
-  'EDIT_POST': editPost
+  'NEW_POST': addPost,
+  'NEW_POST_SUCCESS': addPost,
+  'EDIT_POST': editPost,
+  'NEW_COMMENT': addComment
 });
 
 export default postReducer

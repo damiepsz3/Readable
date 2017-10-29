@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import { createComment } from '../../actions'
 import './NewComment.css'
+import uuidv1 from 'uuid/v1'
 
 class NewComment extends Component {
   state = {
     body: '',
     author: '',
-    parentId: this.props.parentId
+    id: uuidv1(),
+    timestamp: Date.now(),
+    parentId: this.props.parentId,
+    deleted: false
   }
 
   handleInputChange = (e) => {
@@ -21,12 +26,13 @@ class NewComment extends Component {
 
   render() {
     const { body, author } = this.state
+    const { newComment } = this.props
     return (
       <div className="new-comment">
-        <input name='body' placeholder='Your comment here' value={body}></input>
-        <input name='author' placeholder='Written by' value={author}></input>
+        <input name='body' placeholder='Your comment here' value={body} onChange={this.handleInputChange}></input>
+        <input name='author' placeholder='Written by' value={author} onChange={this.handleInputChange}></input>
         <div className='button-container'>
-          <a>Comment!</a>
+          <a onClick={() => newComment(this.state)}>Comment!</a>
         </div>
       </div>
     );
@@ -35,13 +41,13 @@ class NewComment extends Component {
 
 const mapStateToProps = ({ entities }, ownProps) => {
   return {
-
+    parentId: ownProps.parentId
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    newComment: (comment) => dispatch(createComment(comment))
   }
 }
 

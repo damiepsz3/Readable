@@ -87,15 +87,14 @@ export const postComments = (id) =>
   },{}))
 
 //comments
-export const comment = (body, author, parentId) =>
-  // add id as UUID and get timestamp
-  fetch(`${api}/comments`, {
+export const comment = (comment) =>
+    fetch(`${api}/comments`, {
     method: 'POST',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ body, author, parentId })
+    body: JSON.stringify(comment)
   }).then(res => res.json())
 
 export const comDetail = (id) =>

@@ -45,10 +45,24 @@ const deleteComment = (state, action) => {
   }
 }
 
+const addComment = (state, action) => {
+  const { id } = action.comment
+  return {
+    ...state,
+    byId:{
+      ...state.byId,
+      [id]: action.comment
+    },
+    allIds: state.allIds.concat(id)
+  }
+}
+
 const commentsReducer = createReducer(initialState, {
   'RECEIVE_COMMENT': receiveComment,
   'COMMENT_VOTE': commentVote,
-  'DELETE_COMMENT': deleteComment
+  'DELETE_COMMENT': deleteComment,
+  'NEW_COMMENT': addComment,
+  'NEW_COMMENT_SUCCESS': addComment
 });
 
 export default commentsReducer

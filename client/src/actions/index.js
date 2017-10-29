@@ -91,9 +91,23 @@ const newPost = (post) => {
   }
 }
 
+const newComment = (comment, parentId) => {
+  return {
+    type: 'NEW_COMMENT',
+    comment
+  }
+}
+
+const commentSuccess = (comment) => {
+  return {
+    type: 'NEW_COMMENT_SUCCESS',
+    comment
+  }
+}
+
 const postedSuccess = (post) => {
   return {
-    type: 'POST_SUCCESS',
+    type: 'NEW_POST_SUCCESS',
     post
   }
 }
@@ -118,6 +132,14 @@ export const createPost = post => {
     dispatch(newPost(post))
     return BlogAPI.post(post)
       .then(resp => dispatch(postedSuccess(resp)))
+    }
+}
+
+export const createComment = comment => {
+  return dispatch => {
+    dispatch(newComment(comment))
+    return BlogAPI.comment(comment)
+      .then(comment => dispatch(commentSuccess(comment)))
     }
 }
 
