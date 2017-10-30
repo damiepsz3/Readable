@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import { deletePostCall, voteIssuing, voteComment, deleteCommentCall } from '../../actions'
 import PostLayout from '../../components/PostLayout/PostLayout'
 import CommentsBox from '../../components/CommentsBox/CommentsBox'
 import './PostContainer.css'
 
 class PostContainer extends Component {
   render() {
-    const { deleted } = this.props
+    const { post, postVote, postDelete, comments, commentDelete, commentVote } = this.props
     return (
       <div className='post-container'>
-        {deleted ?
+        {post.deleted ?
           <h1>This post doesn't exist</h1>
         :
           <div>
-            <PostLayout />
-            <CommentsBox />
+            <PostLayout post={post} onPostVote={postVote} onPostDelete={postDelete}/>
+            <CommentsBox comments={comments} onCommentVote={commentVote} onCommentDelete={commentDelete}/>
           </div>
         }
       </div>
@@ -23,15 +24,23 @@ class PostContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ entities, uiState }, ownProps) => {
+const mapStateToProps = ({ entities }, ownProps) => {
   const { id } = ownProps.match.params
   const post = entities.posts.byId[id] || {}
-  const deleted = post.deleted || false
+  const comments = Object.keys(entities.comments.byId).map(comId => entities.comments.byId[comId]).filter(comment => comment.parentId === id && comment.deleted === false)
   return {
-    id,
-    deleted
+    post,
+    comments
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    postDelete: (id) => dispatch(deletePostCall(id)),
+    postVote: (id, option) => dispatch(voteIssuing(id,option)),
+    commentVote: (id, option) => dispatch(voteComment(id, option)),
+    commentDelete: (id, parentId) => dispatch(deleteCommentCall(id, parentId))
+  }
+}
 
-export default withRouter(connect(mapStateToProps)(PostContainer))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostContainer))

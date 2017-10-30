@@ -107,7 +107,7 @@ const addComment = (state, action) => {
       ...state.byId,
       [parentId]: {
         ...state.byId[parentId],
-        'comments': state.byId[parentId].comments.concat(action.comment.id)
+        'comments': state.byId[parentId].comment ? state.byId[parentId].comments.concat(action.comment.id) : [action.comment.id]
       }
     }
   }

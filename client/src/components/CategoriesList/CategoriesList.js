@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import capitalize from 'capitalize'
 import './CategoriesList.css'
@@ -22,11 +21,4 @@ class CategoriesList extends Component {
   }
 }
 
-const mapStateToProps = ({ entities }) => {
-  const { categories } = entities
-  return {
-    categories: Object.keys(categories.byId).map(id => categories.byId[id])
-  }
-}
-
-export default connect(mapStateToProps)(CategoriesList)
+export default CategoriesList

@@ -9,8 +9,8 @@ class NewComment extends Component {
   state = {
     body: '',
     author: '',
-    id: uuidv1(),
-    timestamp: Date.now(),
+    id: '',
+    timestamp: '',
     parentId: this.props.parentId,
     deleted: false
   }
@@ -24,15 +24,21 @@ class NewComment extends Component {
     });
   }
 
+  createComment = () => {
+    this.setState({
+      id: uuidv1(),
+      timestamp: Date.now()
+    })
+  }
+
   render() {
     const { body, author } = this.state
-    const { newComment } = this.props
     return (
       <div className="new-comment">
         <input name='body' placeholder='Your comment here' value={body} onChange={this.handleInputChange}></input>
         <input name='author' placeholder='Written by' value={author} onChange={this.handleInputChange}></input>
         <div className='button-container'>
-          <a onClick={() => newComment(this.state)}>Comment!</a>
+          <a onClick={() => this.createComment()}>Comment!</a>
         </div>
       </div>
     );

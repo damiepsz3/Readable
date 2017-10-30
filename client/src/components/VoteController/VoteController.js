@@ -5,12 +5,12 @@ import './VoteController.css'
 class VoteController extends Component {
 
   render() {
-    const { voteFunction, id, score } = this.props
+    const { voteFunction, score } = this.props
     return (
       <div className='vote-controller'>
-        <a className="thump-up" onClick={() => voteFunction(id, 'upVote')}><MdThumbUp/></a>
+        <a className="thump-up" onClick={() => voteFunction('upVote')}><MdThumbUp/></a>
         <span>{score}</span>
-        <a className="thump-down" onClick={() => voteFunction(id, 'downVote')}><MdThumbDown/></a>
+        <a className="thump-down" onClick={() => voteFunction('downVote')}><MdThumbDown/></a>
       </div>
     );
   }

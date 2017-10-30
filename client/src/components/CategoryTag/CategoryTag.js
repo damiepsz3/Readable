@@ -5,7 +5,7 @@ import './CategoryTag.css'
 
 class CategoryTag extends Component {
   render() {
-    const { category } = this.props
+    const { category = '...' } = this.props
     return (
       <div className='category-tag'>
         <span><Link to={`/${category}`}>{capitalize.words(category)}</Link></span>

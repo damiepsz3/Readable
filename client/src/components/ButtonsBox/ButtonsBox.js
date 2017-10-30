@@ -4,11 +4,11 @@ import './ButtonsBox.css'
 
 class ButtonsBox extends Component {
   render() {
-    const { editFunc, deleteFunc, id, parentId = null } = this.props
+    const { editFunc, deleteFunc } = this.props
     return (
       <div>
-        <a className="button-box" onClick={() => editFunc(id)}><MdCreate/></a>
-        <a className="button-box" onClick={() => deleteFunc(id, parentId)}><MdDelete/></a>
+        <a className="button-box" onClick={() => editFunc()}><MdCreate/></a>
+        <a className="button-box" onClick={() => deleteFunc()}><MdDelete/></a>
       </div>
     );
   }

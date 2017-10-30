@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux'
-import { voteComment, deleteCommentCall } from '../../actions'
 import VoteController from '../VoteController/VoteController'
 import ButtonsBox from '../ButtonsBox/ButtonsBox'
 import './CommentCard.css'
@@ -11,9 +9,16 @@ class CommentCard extends Component {
     return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}.`
   }
 
+  handleDelete = () => {
+    this.props.deleteComment(this.props.comment.id, this.props.comment.parentId)
+  }
+
+  handleVote = (option) => {
+    this.props.voteComment(this.props.comment.id, option)
+  }
 
   render() {
-    const { body, author, voteScore, timestamp, id, postComment, deleteComment, parentId } = this.props
+    const { body, author, voteScore, timestamp } = this.props.comment
     return (
       <div className='comment-card'>
         <div className='comment-info'>
@@ -21,30 +26,13 @@ class CommentCard extends Component {
           <div className="comment-info-author">
             <em>By {author} on {this.formatDate(timestamp)}</em>
           </div>
-          <ButtonsBox id={id}  parentId={parentId} deleteFunc={deleteComment}/>
+          <ButtonsBox deleteFunc={this.handleDelete}/>
         </div>
-        <VoteController score={voteScore} id={id} voteFunction={postComment} />
+        <VoteController score={voteScore} voteFunction={this.handleVote} />
       </div>
   );
   }
 }
 
-const mapStateToProps = ({ entities }, ownProps) => {
-    const { body, author, voteScore, timestamp, parentId } = entities.comments.byId[ownProps.id];
-    return {
-      body,
-      author,
-      voteScore,
-      timestamp,
-      parentId
-    }
-}
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    postComment: (id, option) => dispatch(voteComment(id, option)),
-    deleteComment: (id, parentId) => dispatch(deleteCommentCall(id, parentId))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CommentCard)
+export default CommentCard
