@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { deletePostCall, voteIssuing, voteComment, deleteCommentCall } from '../../actions'
+import { deletePostCall, voteIssuing, voteComment, deleteCommentCall, createComment } from '../../actions'
 import PostLayout from '../../components/PostLayout/PostLayout'
 import CommentsBox from '../../components/CommentsBox/CommentsBox'
 import './PostContainer.css'
+import uuidv1 from 'uuid/v1'
 
 class PostContainer extends Component {
+  handlerNewComment = (partialComment) => {
+    const comment = {
+      ...partialComment,
+      id: uuidv1(),
+      timestamp: Date.now(),
+      parentId: this.props.post.id
+    }
+    this.props.addComment(comment)
+  }
+
   render() {
     const { post, postVote, postDelete, comments, commentDelete, commentVote } = this.props
     return (
@@ -16,7 +27,7 @@ class PostContainer extends Component {
         :
           <div>
             <PostLayout post={post} onPostVote={postVote} onPostDelete={postDelete}/>
-            <CommentsBox comments={comments} onCommentVote={commentVote} onCommentDelete={commentDelete}/>
+            <CommentsBox comments={comments} onCommentVote={commentVote} onCommentDelete={commentDelete} onAddComment={this.handlerNewComment}/>
           </div>
         }
       </div>
@@ -39,7 +50,8 @@ const mapDispatchToProps = (dispatch) => {
     postDelete: (id) => dispatch(deletePostCall(id)),
     postVote: (id, option) => dispatch(voteIssuing(id,option)),
     commentVote: (id, option) => dispatch(voteComment(id, option)),
-    commentDelete: (id, parentId) => dispatch(deleteCommentCall(id, parentId))
+    commentDelete: (id, parentId) => dispatch(deleteCommentCall(id, parentId)),
+    addComment: (comment) => dispatch(createComment(comment))
   }
 }
 

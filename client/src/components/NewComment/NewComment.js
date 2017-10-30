@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
-import { createComment } from '../../actions'
 import './NewComment.css'
-import uuidv1 from 'uuid/v1'
 
 class NewComment extends Component {
   state = {
@@ -11,7 +7,7 @@ class NewComment extends Component {
     author: '',
     id: '',
     timestamp: '',
-    parentId: this.props.parentId,
+    parentId: '',
     deleted: false
   }
 
@@ -25,36 +21,26 @@ class NewComment extends Component {
   }
 
   createComment = () => {
+    this.props.newComment(this.state)
     this.setState({
-      id: uuidv1(),
-      timestamp: Date.now()
+      body: '',
+      author: ''
     })
   }
 
   render() {
     const { body, author } = this.state
+    const disabled = body.length > 0 && author.length > 0
     return (
       <div className="new-comment">
         <input name='body' placeholder='Your comment here' value={body} onChange={this.handleInputChange}></input>
         <input name='author' placeholder='Written by' value={author} onChange={this.handleInputChange}></input>
         <div className='button-container'>
-          <a onClick={() => this.createComment()}>Comment!</a>
+          <button onClick={() => this.createComment()} disabled={!disabled}>Comment!</button>
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ entities }, ownProps) => {
-  return {
-    parentId: ownProps.parentId
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    newComment: (comment) => dispatch(createComment(comment))
-  }
-}
-
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(NewComment))
+export default NewComment

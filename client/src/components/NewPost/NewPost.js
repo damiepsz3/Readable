@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { modalSwitch, createPost } from '../../actions'
 import capitalize from 'capitalize'
 import './NewPost.css'
-import uuidv1 from 'uuid/v1'
 
 
 class NewPost extends Component {
@@ -12,8 +9,8 @@ class NewPost extends Component {
     title: '',
     body:'',
     author: '',
-    id: uuidv1(),
-    timestamp: Date.now(),
+    id: '',
+    timestamp: ''
   }
 
   handleInputChange = (e) => {
@@ -25,9 +22,21 @@ class NewPost extends Component {
     });
   }
 
+  handleNewPostInfo = () => {
+    this.props.newPost(this.state)
+    this.setState({
+      category: 'default',
+      title: '',
+      author: '',
+      body: ''
+    })
+  }
+
   render() {
-    const { categories, switchModal, newPost } = this.props
+    const { categories, switchModal } = this.props
     const { category, title, body, author } = this.state
+    const disabled = category !== 'default' && title.length > 0 && author.length > 0 && body.length > 0
+    console.log(disabled);
     return (
       <div className="new-post">
         <h1>Create a new post</h1>
@@ -44,27 +53,12 @@ class NewPost extends Component {
         <textarea placeholder='Body' value={body} name='body' onChange={this.handleInputChange}></textarea>
         <input placeholder='Written by' value={author} name='author' onChange={this.handleInputChange}></input>
         <div className='actions'>
-          <a className='cancel' onClick={() => switchModal(false)}>Cancel</a>
-          <a className='post' onClick={() => newPost(this.state)}>Post!</a>
+          <button className='cancel' onClick={() => switchModal(false)}>Cancel</button>
+          <button className='post' onClick={() => this.handleNewPostInfo()} disabled={!disabled}>Post!</button>
         </div>
       </div>
     );
   }
 }
 
-const mapStateProps = ({ entities }) => {
-  const { categories } = entities
-  return {
-    categories
-  }
-}
-
-
-const mapDispatchProps = dispatch => {
-  return {
-    switchModal: (open) => dispatch(modalSwitch(open)),
-    newPost: (post) => dispatch(createPost(post))
-  }
-}
-
-export default connect(mapStateProps,mapDispatchProps)(NewPost)
+export default NewPost

@@ -2,12 +2,21 @@ import React, { Component } from 'react';
 import Modal from 'react-modal'
 import NewPost from '../../components/NewPost/NewPost'
 import { connect } from 'react-redux'
-import { modalSwitch } from '../../actions'
-
+import { modalSwitch, createPost } from '../../actions'
+import uuidv1 from 'uuid/v1'
 
 class ModalContainer extends Component {
+  handleNewPost = (partialPost) => {
+    const post = {
+      ...partialPost,
+      id: uuidv1(),
+      timestamp: Date.now()
+    }
+    this.props.newPost(post)
+  }
+
   render() {
-    const { isOpen } = this.props
+    const { isOpen, categories, switchModal } = this.props
     const customStyles = {
       content : {
         top                   : '50%',
@@ -26,7 +35,7 @@ class ModalContainer extends Component {
           isOpen={isOpen}
           style={customStyles}
         >
-          <NewPost/>
+          <NewPost categories={categories} switchModal={switchModal} newPost={this.handleNewPost}/>
         </Modal>
 
       </div>
@@ -34,16 +43,19 @@ class ModalContainer extends Component {
   }
 }
 
-const mapStateProps = ({ uiState }) => {
+const mapStateProps = ({ uiState, entities }) => {
   const { isOpen } = uiState.modal
+  const { categories } = entities
   return {
-    isOpen
+    isOpen,
+    categories
   }
 }
 
 const mapDispatchProps = dispatch => {
   return {
-    switchModal: (open) => dispatch(modalSwitch(open))
+    switchModal: (open) => dispatch(modalSwitch(open)),
+    newPost: (post) => dispatch(createPost(post))
   }
 }
 

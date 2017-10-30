@@ -11,11 +11,6 @@ import './ListsContainer.css'
 
 
 class ListsContainer extends Component {
-
-  componentDidMount(){
-    this.props.firstCall()
-  }
-
   render() {
     const { options, sortBy, selected, filterByCat , categories, category, postVote, postDelete } = this.props
     return (

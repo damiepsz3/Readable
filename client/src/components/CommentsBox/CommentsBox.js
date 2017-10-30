@@ -7,7 +7,7 @@ import './CommentsBox.css'
 class CommentsBox extends Component {
 
   render() {
-    const { comments, onCommentVote, onCommentDelete } = this.props
+    const { comments, onCommentVote, onCommentDelete, onAddComment } = this.props
     return (
       <div className="comments-box">
         <ul>
@@ -16,7 +16,7 @@ class CommentsBox extends Component {
               <CommentCard comment={comment} deleteComment={onCommentDelete} voteComment={onCommentVote} />
             </li>
           ))}
-          <NewComment/>
+          <NewComment newComment={onAddComment}/>
         </ul>
       </div>
     );

@@ -16,7 +16,7 @@ const isOpenSwitch = (state, action) => {
 
 const modalReducer = createReducer(initialState, {
     'MODAL_SWITCH': isOpenSwitch,
-    'POST_SUCCESS': isOpenSwitch
+    'NEW_POST_SUCCESS': isOpenSwitch
 })
 
 export default modalReducer

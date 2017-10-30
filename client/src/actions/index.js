@@ -108,7 +108,8 @@ const commentSuccess = (comment) => {
 const postedSuccess = (post) => {
   return {
     type: 'NEW_POST_SUCCESS',
-    post
+    post,
+    open: false
   }
 }
 

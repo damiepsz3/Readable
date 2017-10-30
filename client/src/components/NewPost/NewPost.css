@@ -36,12 +36,14 @@
   justify-content: flex-end;
 }
 
-.actions a {
+.actions button {
   margin-left: 8px;
   border: 1px;
-  padding: 3px 8px;
+  padding: 10px 8px;
   border-radius: 5px;
-  color: #fff
+  color: #fff;
+  font-size: .9em;
+  cursor: pointer;
 }
 
 .cancel {
@@ -50,4 +52,8 @@
 
 .post {
   background: #429044;
+}
+.post:disabled {
+  background: #A1B79F;
+  cursor: not-allowed;
 }

@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
-import App from './components/App';
+import MainContainer from './containers/MainContainer/MainContainer';
 import registerServiceWorker from './registerServiceWorker';
 import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from './reducers';
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
+import { firstCall } from './actions'
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
@@ -19,10 +20,12 @@ const store = createStore(
   )
 )
 
+store.dispatch(firstCall())
+
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <MainContainer />
     </BrowserRouter>
   </Provider>, document.getElementById('root'));
 registerServiceWorker();
