@@ -158,6 +158,20 @@ export const editPost = postChanges => {
   }
 }
 
+export const editComment = commentChanges => {
+  return dispatch => {
+      dispatch({
+        type: 'EDIT_COMMENT',
+        commentChanges
+      })
+      return BlogAPI.comEdit(commentChanges)
+      .then(resp => dispatch({
+        type: 'EDIT_COMMENT_SUCCESS',
+        resp
+      }))
+  }
+}
+
 export const deletePostCall = (id) => dispatch => {
   return BlogAPI.postDelete(id)
     .then(resp => dispatch(deletePost(id)))

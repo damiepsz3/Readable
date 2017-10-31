@@ -111,7 +111,7 @@ export const comVote = (id, option) =>
     body: JSON.stringify({ option })
   }).then(res => res.json())
 
-export const comEdit = (id, timestamp, body) =>
+export const comEdit = ({id, timestamp, body}) =>
   fetch(`${api}/comments/${id}`, {
     method: 'PUT',
     headers: {

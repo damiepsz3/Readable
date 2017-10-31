@@ -7,13 +7,13 @@ import './CommentsBox.css'
 class CommentsBox extends Component {
 
   render() {
-    const { comments, onCommentVote, onCommentDelete, onAddComment } = this.props
+    const { comments, onCommentVote, onCommentDelete, onAddComment, onCommentEdit } = this.props
     return (
       <div className="comments-box">
         <ul>
           {comments.map(comment => (
             <li key={comment.id}>
-              <CommentCard comment={comment} deleteComment={onCommentDelete} voteComment={onCommentVote} />
+              <CommentCard comment={comment} deleteComment={onCommentDelete} voteComment={onCommentVote} editComment={onCommentEdit} />
             </li>
           ))}
           <NewComment newComment={onAddComment}/>

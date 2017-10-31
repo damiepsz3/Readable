@@ -57,12 +57,28 @@ const addComment = (state, action) => {
   }
 }
 
+const editComment = (state, action) => {
+  const { id, body, timestamp } = action.commentChanges
+  return {
+    ...state,
+    byId:{
+      ...state.byId,
+      [id]:{
+        ...state.byId[id],
+        body,
+        timestamp
+      }
+    }
+  }
+}
+
 const commentsReducer = createReducer(initialState, {
   'RECEIVE_COMMENT': receiveComment,
   'COMMENT_VOTE': commentVote,
   'DELETE_COMMENT': deleteComment,
   'NEW_COMMENT': addComment,
-  'NEW_COMMENT_SUCCESS': addComment
+  'NEW_COMMENT_SUCCESS': addComment,
+  'EDIT_COMMENT': editComment
 });
 
 export default commentsReducer

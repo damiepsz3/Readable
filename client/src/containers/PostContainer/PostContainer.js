@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { deletePostCall, voteIssuing, voteComment, deleteCommentCall, createComment, editPost } from '../../actions'
+import { deletePostCall, voteIssuing, voteComment, deleteCommentCall, createComment, editPost, editComment } from '../../actions'
 import PostLayout from '../../components/PostLayout/PostLayout'
 import CommentsBox from '../../components/CommentsBox/CommentsBox'
 import './PostContainer.css'
@@ -19,7 +19,7 @@ class PostContainer extends Component {
   }
 
   render() {
-    const { post, postVote, postDelete, comments, commentDelete, commentVote, postEdit } = this.props
+    const { post, postVote, postDelete, comments, commentDelete, commentVote, postEdit, commentEdit } = this.props
     return (
       <div className='post-container'>
         {post.deleted ?
@@ -27,7 +27,7 @@ class PostContainer extends Component {
         :
           <div>
             <PostLayout post={post} onPostVote={postVote} onPostDelete={postDelete} onPostEdit={postEdit}/>
-            <CommentsBox comments={comments} onCommentVote={commentVote} onCommentDelete={commentDelete} onAddComment={this.handlerNewComment}/>
+            <CommentsBox comments={comments} onCommentVote={commentVote} onCommentDelete={commentDelete} onAddComment={this.handlerNewComment} onCommentEdit={commentEdit}/>
           </div>
         }
       </div>
@@ -52,6 +52,7 @@ const mapDispatchToProps = (dispatch) => {
     postEdit: (postChanges) => dispatch(editPost(postChanges)),
     commentVote: (id, option) => dispatch(voteComment(id, option)),
     commentDelete: (id, parentId) => dispatch(deleteCommentCall(id, parentId)),
+    commentEdit: (commentChanges) => dispatch(editComment(commentChanges)),
     addComment: (comment) => dispatch(createComment(comment))
   }
 }
