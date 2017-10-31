@@ -9,6 +9,7 @@
 .post-header {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .post-header-tag {
@@ -17,4 +18,13 @@
 
 .post-header-buttons {
   margin-left: auto;
+}
+
+.post-layout {
+  width: 600px;
+}
+
+.post-layout p {
+  max-width: 600px;
+  word-wrap: break-word;
 }

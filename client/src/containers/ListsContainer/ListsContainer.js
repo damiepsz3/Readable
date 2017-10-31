@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PostsList from '../../components/PostsList/PostsList'
 import CategoriesList from '../../components/CategoriesList/CategoriesList'
-import { firstCall, selectSort, deletePostCall, voteIssuing, } from '../../actions'
+import { firstCall, selectSort, deletePostCall, voteIssuing, editPost} from '../../actions'
 import { connect } from 'react-redux'
 import Select from 'react-select'
 import capitalize from 'capitalize'
@@ -12,7 +12,7 @@ import './ListsContainer.css'
 
 class ListsContainer extends Component {
   render() {
-    const { options, sortBy, selected, filterByCat , categories, category, postVote, postDelete } = this.props
+    const { options, sortBy, selected, filterByCat , categories, category, postVote, postDelete, postEdit } = this.props
     return (
       <div className="blog-list">
         <CategoriesList categories={categories}/>
@@ -20,7 +20,7 @@ class ListsContainer extends Component {
           <h3>{capitalize.words(category)}</h3>
           <Select className="sort-dropdown" value={selected} options={options} onChange={sortBy} resetValue={'SHOW_ALL'}/>
         </div>
-        <PostsList selected={selected} posts={filterByCat} onDeletePost={postDelete} onVotePost={postVote}/>
+        <PostsList selected={selected} posts={filterByCat} onDeletePost={postDelete} onVotePost={postVote} onEditPost={postEdit}/>
       </div>
     )}
 }
@@ -45,7 +45,8 @@ const mapDispatchToProps = (dispatch) => {
     firstCall: () => dispatch(firstCall()),
     sortBy: (value) => dispatch(selectSort(value)),
     postDelete: (id) => dispatch(deletePostCall(id)),
-    postVote: (id, option) => dispatch(voteIssuing(id,option))
+    postVote: (id, option) => dispatch(voteIssuing(id,option)),
+    postEdit: (postChanges) => dispatch(editPost(postChanges))
   }
 }
 

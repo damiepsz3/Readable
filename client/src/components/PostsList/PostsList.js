@@ -5,14 +5,14 @@ import sortBy from 'sort-by'
 
 class PostsList extends Component {
   render() {
-    const { posts, selected, onDeletePost, onVotePost } = this.props
+    const { posts, selected, onDeletePost, onVotePost, onEditPost } = this.props
     return (
       <div className="blog-posts">
         <ul>
           {posts.length ?
             posts.sort(sortBy(selected.value)).map(post => (
               <li key={post.id}>
-                <PostCard post={post} onDelete={onDeletePost} onVote={onVotePost}/>
+                <PostCard post={post} onDelete={onDeletePost} onVote={onVotePost} onEdit={onEditPost}/>
               </li>
             ))
             :
