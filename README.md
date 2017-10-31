@@ -7,7 +7,7 @@ For the Readable project, you will build a content and comment web app. Users wi
 4. Go to the server directory in the project: `cd readable/server`
 5. In the client directory run: `npm install`
 ## Usage
-In the client directory, you can run:
+In the server directory, you can run:
 
 ### `node server.js`
 
@@ -16,7 +16,7 @@ Open [http://localhost:5011](http://localhost:5001) to view the description in t
 
 ### `npm start`
 
-In the server directory, you can run:
+In the client directory, you can run:
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
