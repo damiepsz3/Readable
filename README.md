@@ -2,9 +2,9 @@
 For the Readable project, you will build a content and comment web app. Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
 ## Installation
 1. Clone the project: `git clone https://github.com/damiepsz3/readable.git`
-2. Go to the client directory in the project: `cd readable/client`
+2. Go to the client directory: `cd readable/client`
 4. In the client directory run: `npm install`
-4. Go to the server directory in the project: `cd readable/server`
+4. Go to the server directory: `cd readable/server`
 5. In the client directory run: `npm install`
 ## Usage
 In the server directory, you can run:
@@ -12,7 +12,7 @@ In the server directory, you can run:
 ### `node server.js`
 
 Runs the server.<br>
-Open [http://localhost:5011](http://localhost:5001) to view the description in the browser.
+Open [http://localhost:5001](http://localhost:5001) to view the description in the browser.
 
 ### `npm start`
 
