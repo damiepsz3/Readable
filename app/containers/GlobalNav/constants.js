@@ -1,0 +1,1 @@
+export const OPEN_CLOSE_DRAWER = 'OPEN_CLOSE_DRAWER'

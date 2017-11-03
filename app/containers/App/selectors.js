@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-const selectGlobal = (state) => state.get('global')
+const selectGlobal = (state) => state.get('global');
 
 const selectRoute = (state) => state.get('route');
 
@@ -24,10 +24,6 @@ const makeSelectCategories = () => createSelector(
   (globalState) => globalState.get('categories')
 );
 
-const makeSelectorDrawer = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.get('drawerIsOpen')
-)
 
 export {
   selectGlobal,
@@ -35,5 +31,4 @@ export {
   makeSelectError,
   makeSelectLoading,
   makeSelectLocation,
-  makeSelectorDrawer
 };

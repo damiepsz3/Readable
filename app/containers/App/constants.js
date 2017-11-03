@@ -8,7 +8,8 @@
  * Follow this format:
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
-export const LOAD_CATEGORIES = 'readable/App/LOAD_CATEGORIES';
-export const LOAD_CATEGORIES_SUCCESS = 'readable/App/LOAD_CATEGORIES_SUCCESS';
-export const LOAD_CATEGORIES_ERROR = 'readable/App/LOAD_CATEGORIES_ERROR';
-export const DEFAULT_LOCALE = 'en';
+
+ export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
+ export const LOAD_CATEGORIES_SUCCESS = 'LOAD_CATEGORIES_SUCCESS';
+ export const LOAD_CATEGORIES_ERROR = 'LOAD_CATEGORIES_ERROR';
+ export const DEFAULT_LOCALE = 'en';

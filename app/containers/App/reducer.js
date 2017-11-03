@@ -4,14 +4,12 @@ import {
   LOAD_CATEGORIES,
   LOAD_CATEGORIES_SUCCESS,
   LOAD_CATEGORIES_ERROR,
-  OPEN_CLOSE_DRAWER
 } from './constants'
 
 const initialState = fromJS({
   loading: false,
   error: false,
   categories: false,
-  drawerIsOpen: false
 })
 
 function appReducer(state = initialState, action) {
@@ -27,9 +25,6 @@ function appReducer(state = initialState, action) {
       return state
         .set('error', action.error)
         .set('loading', false)
-    case OPEN_CLOSE_DRAWER:
-      return state
-        .set('drawerIsOpen', !state.get('drawerIsOpen'))
     default:
       return state
   }
