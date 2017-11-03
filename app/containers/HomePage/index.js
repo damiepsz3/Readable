@@ -10,11 +10,32 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import messages from './messages'; //delete
 
-export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+import { makeSelectError, makeSelectLoading } from 'containers/App/selectors';
+import { loadPosts, loadComments } from 'containers/App/actions';
+
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+
+import { makeSelectPostCategory } from './selectors'
+import saga from './saga';
+import reducer from './reducer';
+
+
+class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  componentDidMount(){
+    this.props.fetchPosts()
+    this.props.fetchComments()
+  }
+
   render() {
+    console.log(this.props);
     return (
       <h1>
         <FormattedMessage {...messages.header} />
@@ -22,3 +43,36 @@ export default class HomePage extends React.PureComponent { // eslint-disable-li
     );
   }
 }
+
+HomePage.propTypes = {
+  loading: PropTypes.bool,
+  error: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
+  ]),
+  posts: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.bool,
+  ]),
+}
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    fetchPosts: () => dispatch(loadPosts()),
+    fetchComments: () => dispatch(loadComments())
+  }
+}
+
+const mapStateToProps = createStructuredSelector({
+  posts: makeSelectPostCategory(),
+  loading: makeSelectError(),
+  error: makeSelectError(),
+})
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps)
+const withSaga = injectSaga({ key: 'home', saga })
+
+export default compose(
+  withSaga,
+  withConnect,
+)(HomePage)

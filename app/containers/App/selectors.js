@@ -24,9 +24,14 @@ const makeSelectCategories = () => createSelector(
   (globalState) => globalState.get('categories')
 );
 
+const makeSelectPosts = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.get('posts')
+)
 
 export {
   selectGlobal,
+  makeSelectPosts,
   makeSelectCategories,
   makeSelectError,
   makeSelectLoading,

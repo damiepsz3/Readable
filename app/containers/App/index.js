@@ -24,6 +24,7 @@ export default function App() {
       <GlobalNav/>
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <Route exact path="/:category" component={HomePage} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>

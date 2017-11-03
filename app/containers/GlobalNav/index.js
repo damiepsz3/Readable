@@ -5,14 +5,14 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom'
 
-import { loadCategories } from '../App/actions';
-import { openCloseDrawer } from './actions'
-import { makeSelectDrawerToggle } from './selectors'
+import { loadCategories } from 'containers/App/actions';
 import { makeSelectCategories, makeSelectError, makeSelectLoading } from 'containers/App/selectors';
-
 
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
+
+import { openCloseDrawer } from './actions'
+import { makeSelectDrawerToggle } from './selectors'
 import reducer from './reducer';
 import saga from './saga';
 
@@ -30,7 +30,6 @@ class GlobalNav extends React.PureComponent {
 
   render() {
     const { drawerToggle, onTogglePress, categories, history } = this.props
-    console.log(this.props);
     return (
       <div>
         <AppBar onLeftIconButtonTouchTap={onTogglePress} title='readable'/>
@@ -60,7 +59,7 @@ GlobalNav.propTypes = {
   categories: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.bool,
-  ])
+  ]),
 }
 
 export function mapDispatchToProps(dispatch) {
@@ -72,11 +71,12 @@ export function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = createStructuredSelector({
   drawerToggle: makeSelectDrawerToggle(),
-  categories: makeSelectCategories()
+  categories: makeSelectCategories(),
+  loading: makeSelectError(),
+  error: makeSelectError(),
 })
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps)
-
 const withReducer = injectReducer({ key: 'globalNav', reducer})
 const withSaga = injectSaga({ key: 'globalNav', saga})
 
