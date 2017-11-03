@@ -1,0 +1,15 @@
+.category-tag {
+  margin: 0 0 10px 0;
+}
+
+.category-tag span {
+  padding: 3px 5px;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 5px;
+  background-color: #c2e0ff;
+  font-size: .9em;
+}
+
+.category-tag a {
+  color: #3672af;
+}
