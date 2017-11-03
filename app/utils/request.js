@@ -1,5 +1,13 @@
 import 'whatwg-fetch';
 
+let token = localStorage.token
+if (!token)
+  token = localStorage.token = Math.random().toString(36).substr(-8)
+
+const headers = {
+  'Accept': 'application/json',
+  'Authorization': token
+}
 /**
  * Parses the JSON returned by a network request
  *
@@ -40,7 +48,7 @@ function checkStatus(response) {
  * @return {object}           The response data
  */
 export default function request(url, options) {
-  return fetch(url, options)
+  return fetch(url, { headers })
     .then(checkStatus)
     .then(parseJSON);
 }

@@ -1,51 +1,37 @@
-/*
- * AppReducer
- *
- * The reducer takes care of our data. Using actions, we can change our
- * application state.
- * To add a new action, add it to the switch statement in the reducer function
- *
- * Example:
- * case YOUR_ACTION_CONSTANT:
- *   return state.set('yourStateVariable', true);
- */
-
-import { fromJS } from 'immutable';
+import { fromJS } from 'immutable'
 
 import {
-  LOAD_REPOS_SUCCESS,
-  LOAD_REPOS,
-  LOAD_REPOS_ERROR,
-} from './constants';
+  LOAD_CATEGORIES,
+  LOAD_CATEGORIES_SUCCESS,
+  LOAD_CATEGORIES_ERROR,
+  OPEN_CLOSE_DRAWER
+} from './constants'
 
-// The initial state of the App
 const initialState = fromJS({
   loading: false,
   error: false,
-  currentUser: false,
-  userData: {
-    repositories: false,
-  },
-});
+  categories: false,
+  drawerIsOpen: false
+})
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
-    case LOAD_REPOS:
+    case LOAD_CATEGORIES:
       return state
         .set('loading', true)
-        .set('error', false)
-        .setIn(['userData', 'repositories'], false);
-    case LOAD_REPOS_SUCCESS:
+    case LOAD_CATEGORIES_SUCCESS:
       return state
-        .setIn(['userData', 'repositories'], action.repos)
+        .setIn(['categories'], action.categories)
         .set('loading', false)
-        .set('currentUser', action.username);
-    case LOAD_REPOS_ERROR:
+    case LOAD_CATEGORIES_ERROR:
       return state
         .set('error', action.error)
-        .set('loading', false);
+        .set('loading', false)
+    case OPEN_CLOSE_DRAWER:
+      return state
+        .set('drawerIsOpen', !state.get('drawerIsOpen'))
     default:
-      return state;
+      return state
   }
 }
 
