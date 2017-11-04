@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import ListsContainer from '../ListsContainer/ListsContainer'
 import PostContainer from '../PostContainer/PostContainer'
 import ModalContainer from '../ModalContainer/ModalContainer'
-import { Route } from 'react-router-dom'
+import NoMatch from '../NoMatch'
+import { Route, Switch } from 'react-router-dom'
 import './MainContainer.css'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
@@ -26,9 +27,11 @@ class MainContainer extends Component {
           </div>
         </div>
         <div className='main-container'>
-          <Route exact path="/" component={ListsContainer}/>
-          <Route exact path="/:category" component={ListsContainer}/>
-          <Route exact path="/:category/:id" component={PostContainer}/>
+          <Switch>
+            <Route exact path="/:category?" component={ListsContainer}/>
+            <Route exact path="/:category/:id" component={PostContainer}/>
+            <Route path="*" component={NoMatch}/>
+          </Switch>
         </div>
         <ModalContainer />
       </div>

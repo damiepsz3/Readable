@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { deletePostCall, voteIssuing, voteComment, deleteCommentCall, createComment, editPost, editComment } from '../../actions'
+import * as Actions from '../../actions'
 import PostLayout from '../../components/PostLayout/PostLayout'
 import CommentsBox from '../../components/CommentsBox/CommentsBox'
 import './PostContainer.css'
 import uuidv1 from 'uuid/v1'
+import NoMatch from '../NoMatch'
 
 class PostContainer extends Component {
   handlerNewComment = (partialComment) => {
@@ -20,18 +21,20 @@ class PostContainer extends Component {
 
   render() {
     const { post, postVote, postDelete, comments, commentDelete, commentVote, postEdit, commentEdit } = this.props
-    return (
-      <div className='post-container'>
-        {post.deleted ?
-          <h1>This post doesn't exist</h1>
-        :
-          <div>
-            <PostLayout post={post} onPostVote={postVote} onPostDelete={postDelete} onPostEdit={postEdit}/>
-            <CommentsBox comments={comments} onCommentVote={commentVote} onCommentDelete={commentDelete} onAddComment={this.handlerNewComment} onCommentEdit={commentEdit}/>
-          </div>
-        }
-      </div>
-    );
+    const postExist = post.hasOwnProperty('deleted') && !post.deleted
+    console.log(!post.deleted);
+    if(postExist) {
+      return (
+        <div className='post-container'>
+           <div>
+             <PostLayout post={post} onPostVote={postVote} onPostDelete={postDelete} onPostEdit={postEdit}/>
+             <CommentsBox comments={comments} onCommentVote={commentVote} onCommentDelete={commentDelete} onAddComment={this.handlerNewComment} onCommentEdit={commentEdit}/>
+           </div>
+         </div>
+      )
+    } else {
+      return <NoMatch/>
+    }
   }
 }
 
@@ -47,13 +50,13 @@ const mapStateToProps = ({ entities }, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    postDelete: (id) => dispatch(deletePostCall(id)),
-    postVote: (id, option) => dispatch(voteIssuing(id,option)),
-    postEdit: (postChanges) => dispatch(editPost(postChanges)),
-    commentVote: (id, option) => dispatch(voteComment(id, option)),
-    commentDelete: (id, parentId) => dispatch(deleteCommentCall(id, parentId)),
-    commentEdit: (commentChanges) => dispatch(editComment(commentChanges)),
-    addComment: (comment) => dispatch(createComment(comment))
+    postDelete: (id) => dispatch(Actions.deletePostCall(id)),
+    postVote: (id, option) => dispatch(Actions.voteIssuing(id,option)),
+    postEdit: (postChanges) => dispatch(Actions.editPost(postChanges)),
+    commentVote: (id, option) => dispatch(Actions.voteComment(id, option)),
+    commentDelete: (id, parentId) => dispatch(Actions.deleteCommentCall(id, parentId)),
+    commentEdit: (commentChanges) => dispatch(Actions.editComment(commentChanges)),
+    addComment: (comment) => dispatch(Actions.createComment(comment))
   }
 }
 
