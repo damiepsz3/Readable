@@ -13,11 +13,12 @@ import './ListsContainer.css'
 class ListsContainer extends Component {
   render() {
     const { options, sortBy, selected, filterByCat , categories, category, postVote, postDelete, postEdit } = this.props
+    const printCategory = (categories.map(cat => cat.path).includes(category) || category === 'All Categories')? category : "Category not found"
     return (
       <div className="blog-list">
         <CategoriesList categories={categories}/>
         <div className="sort-breadcumb">
-          <h3>{capitalize.words(category)}</h3>
+          <h3>{capitalize.words(printCategory)}</h3>
           <Select className="sort-dropdown" value={selected} options={options} onChange={sortBy} resetValue={'SHOW_ALL'}/>
         </div>
         <PostsList selected={selected} posts={filterByCat} onDeletePost={postDelete} onVotePost={postVote} onEditPost={postEdit}/>
@@ -28,7 +29,7 @@ class ListsContainer extends Component {
 const mapStatetoProps = ({ entities, uiState }, ownProps) => {
   const { categories, posts } = entities
   const { options, selected } = uiState.sortBy
-  const category  = ownProps.match.params.category || 'All Categories'
+  const category = ownProps.match.params.category || 'All Categories'
   const filterByDel = Object.keys(posts.byId).map(id => posts.byId[id]).filter(post => !post.deleted)
   const filterByCat = category === 'All Categories' ?  filterByDel : filterByDel.filter(post => post.category === category)
   return {

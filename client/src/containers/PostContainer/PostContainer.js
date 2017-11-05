@@ -22,7 +22,6 @@ class PostContainer extends Component {
   render() {
     const { post, postVote, postDelete, comments, commentDelete, commentVote, postEdit, commentEdit } = this.props
     const postExist = post.hasOwnProperty('deleted') && !post.deleted
-    console.log(!post.deleted);
     if(postExist) {
       return (
         <div className='post-container'>

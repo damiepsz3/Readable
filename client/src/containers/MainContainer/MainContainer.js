@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ListsContainer from '../ListsContainer/ListsContainer'
 import PostContainer from '../PostContainer/PostContainer'
 import ModalContainer from '../ModalContainer/ModalContainer'
-import NoMatch from '../NoMatch'
+import NoMatch from '../../components/NoMatch'
 import { Route, Switch } from 'react-router-dom'
 import './MainContainer.css'
 import { connect } from 'react-redux'
