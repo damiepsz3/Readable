@@ -36,7 +36,6 @@ class NewPost extends Component {
     const { categories, switchModal } = this.props
     const { category, title, body, author } = this.state
     const disabled = category !== 'default' && title.length > 0 && author.length > 0 && body.length > 0
-    console.log(disabled);
     return (
       <div className="new-post">
         <h1>Create a new post</h1>

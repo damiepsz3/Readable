@@ -12,7 +12,7 @@ import { modalSwitch } from '../../actions'
 class MainContainer extends Component {
 
   render() {
-    const { location, history, switchModal } = this.props
+    const { location, history, modalSwitch } = this.props
     return (
       <div className="blog">
         <div className="blog-title">
@@ -23,7 +23,7 @@ class MainContainer extends Component {
             </div>
           }
           <div className="add-post">
-            <a onClick={()=> switchModal(true)} >New post</a>
+            <a onClick={()=> modalSwitch(true)} >New post</a>
           </div>
         </div>
         <div className='main-container'>
@@ -40,10 +40,4 @@ class MainContainer extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    switchModal: (open) => dispatch(modalSwitch(open)),
-  }
-}
-
-export default withRouter(connect(null, mapDispatchToProps)(MainContainer))
+export default withRouter(connect(null, { modalSwitch } )(MainContainer))
