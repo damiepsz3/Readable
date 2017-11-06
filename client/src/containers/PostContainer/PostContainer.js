@@ -6,7 +6,7 @@ import PostLayout from '../../components/PostLayout/PostLayout'
 import CommentsBox from '../../components/CommentsBox/CommentsBox'
 import './PostContainer.css'
 import uuidv1 from 'uuid/v1'
-import NoMatch from '../NoMatch'
+import NoMatch from '../../components/NoMatch'
 
 class PostContainer extends Component {
   handlerNewComment = (partialComment) => {
