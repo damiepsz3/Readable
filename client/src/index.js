@@ -6,9 +6,9 @@ import MainContainer from './containers/MainContainer/MainContainer';
 import registerServiceWorker from './registerServiceWorker';
 import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from './reducers';
-import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
-import { firstCall } from './actions'
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import { firstCall } from './actions';
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
